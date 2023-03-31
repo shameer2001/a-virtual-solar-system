@@ -1,3 +1,6 @@
+#ifndef PARTICLE_HPP
+#define PARTICLE_HPP
+
 #include <Eigen/Core>
 
 class Particle {
@@ -33,3 +36,7 @@ Eigen::Vector3d calcAcceleration(const Particle& particle1, const Particle& part
 
 bool operator==(const Particle& p1, const Particle& p2);
 void sumAccelerations(const std::vector<Particle>& particles, Particle& particle_main);
+
+
+
+#endif

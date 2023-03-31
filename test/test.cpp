@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include "particle.hpp"
+#include "../app/main.cpp"
 #include <iostream>
 using Catch::Matchers::WithinRel;
 
@@ -241,4 +242,70 @@ TEST_CASE("Ensure a particle with two equally sized particles an equal distance 
 
 
     REQUIRE( p1.getAcceleration() == acc_zero );
+}
+
+
+
+
+
+
+
+
+
+TEST_CASE("Test initial condition generator class", "[CommandLineApp]") {
+    InitialConditionGenerator icg;
+
+    SECTION("Ensure Sun is instantiated correctly", "[CommandLineApp]") {
+        double mass_exp = 1.0;
+        Eigen::Vector3d pos_exp{0.0, 0.0, 0.0};
+        Eigen::Vector3d vel_exp{0.0, 0.0, 0.0};
+        Eigen::Vector3d acc_exp{0.0, 0.0, 0.0};
+
+        Particle sun = icg.solarSystemList()[0];
+
+        REQUIRE( sun.getMass() == mass_exp );
+        REQUIRE( sun.getPosition() == pos_exp );
+        REQUIRE( sun.getVelocity() == vel_exp );
+        REQUIRE( sun.getAcceleration() == acc_exp );
+    }
+
+
+    SECTION("Ensure size of list is correct", "[CommandLineApp]") {
+
+        REQUIRE( icg.solarSystemList().size() == 9 );
+    }
+
+
+    SECTION("Ensure mass of planets is correct", "[CommandLineApp]") {
+
+        double mercury_mass = icg.solarSystemList()[1].getMass();
+        double venus_mass = icg.solarSystemList()[2].getMass();
+        double earth_mass = icg.solarSystemList()[3].getMass();
+        double mars_mass = icg.solarSystemList()[4].getMass();
+        double jupiter_mass = icg.solarSystemList()[5].getMass();
+        double saturn_mass = icg.solarSystemList()[6].getMass();
+        double uranus_mass = icg.solarSystemList()[7].getMass();
+        double neptune_mass = icg.solarSystemList()[8].getMass();
+
+        double mercury_mass_exp = 1.0/6023600.0;
+        double venus_mass_exp = 1.0/408524.0;
+        double earth_mass_exp = 1.0/332946.038;
+        double mars_mass_exp = 1.0/3098710.0;
+        double jupiter_mass_exp = 1.0/1047.55;
+        double saturn_mass_exp = 1.0/3499.0;
+        double uranus_mass_exp = 1.0/22962.0;
+        double neptune_mass_exp = 1.0/19352.0;
+
+
+        REQUIRE( mercury_mass == mercury_mass_exp );
+        REQUIRE( venus_mass == venus_mass_exp );
+        REQUIRE( earth_mass == earth_mass_exp );
+        REQUIRE( mars_mass == mars_mass_exp );
+        REQUIRE( jupiter_mass == jupiter_mass_exp );
+        REQUIRE( saturn_mass == saturn_mass_exp );
+        REQUIRE( uranus_mass == uranus_mass_exp );
+        REQUIRE( neptune_mass == neptune_mass_exp );
+
+    }
+
 }
