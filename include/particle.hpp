@@ -1,5 +1,5 @@
-#ifndef PARTICLE_HPP
-#define PARTICLE_HPP
+#ifndef particle_hpp
+#define particle_hpp
 
 #include <Eigen/Core>
 
