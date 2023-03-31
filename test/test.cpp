@@ -92,12 +92,9 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
         Particle p2(mass_test2, pos_test2, vel_test2, acc_test2);
 
         Eigen::Vector3d acceleration = calcAcceleration(p1, p2);
-        Eigen::Vector3d acc_exp(1.0/pow(3.0, 3.0/2.0), 1.0/pow(3.0, 3.0/2.0), 1.0/pow(3.0, 3.0/2.0));
-        std::cout << acceleration[0] << " " << acceleration[1] << " " << acceleration[2] << std::endl;
-        std::cout << acc_exp[0]  << " " << acc_exp[1]  << " " << acc_exp[2] << std::endl;
-        std::cout << 1/3;
+        Eigen::Vector3d acc_exp(1.0/pow(3.0, 3.0/2.0), 1.0/pow(3.0, 3.0/2.0), 1.0/pow(3.0, 3.0/2.0)); // Vector contents calculated by hand using equation
 
-        REQUIRE(acceleration.isApprox(acc_exp));
+        REQUIRE( acceleration.isApprox(acc_exp) );
     }
 
 
@@ -118,7 +115,7 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
         Eigen::Vector3d acceleration = calcAcceleration(p1, p2);
         Eigen::Vector3d acc_exp( 1.0/pow(6, 3.0/2.0), 1.0/pow(6, 3.0/2.0), 2.0/pow(6, 3.0/2.0) );
 
-        REQUIRE(acceleration.isApprox(acc_exp));
+        REQUIRE( acceleration.isApprox(acc_exp) );
     }
 
 
@@ -140,7 +137,7 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
         Eigen::Vector3d acceleration = calcAcceleration(p1, p2);
         Eigen::Vector3d acc_exp( 3.0/pow(19.0, 3.0/2.0), 1.0/pow(19.0, 3.0/2.0), 3.0/pow(19.0, 3.0/2.0) );
 
-        REQUIRE(acceleration.isApprox(acc_exp));
+        REQUIRE( acceleration.isApprox(acc_exp) );
     }
 
 
@@ -162,7 +159,7 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
         Eigen::Vector3d acceleration = calcAcceleration(p1, p2);
         Eigen::Vector3d acc_exp( 5.0/pow(83.0, 3.0/2.0), 3.0/pow(83.0, 3.0/2.0), 7.0/pow(83.0, 3.0/2.0) );
 
-        REQUIRE(acceleration.isApprox(acc_exp));
+        REQUIRE( acceleration.isApprox(acc_exp) );
     }
 
 }
