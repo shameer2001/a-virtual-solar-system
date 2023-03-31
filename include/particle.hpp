@@ -9,11 +9,15 @@ class Particle {
         // get functions:
         Eigen::Vector3d getPosition() const;
         Eigen::Vector3d getVelocity() const;
+        Eigen::Vector3d getAcceleration() const;
         double getMass() const;
 
         // Update functions:
-        Eigen::Vector3d updateAcceleration(Eigen::Vector3d& acc);
+        void updateAcceleration(Eigen::Vector3d& acc);
         void update(double dt);
+        
+
+        
 
     private:
         double mass;
@@ -23,3 +27,9 @@ class Particle {
         
 
 };
+
+
+Eigen::Vector3d calcAcceleration(const Particle& particle1, const Particle& particle2, double elipson = 0.0);
+
+bool operator==(const Particle& p1, const Particle& p2);
+void sumAccelerations(const std::vector<Particle>& particles, Particle& particle_main);
