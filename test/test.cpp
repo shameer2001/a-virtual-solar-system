@@ -1,7 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include "particle.hpp"
-#include "../app/main.cpp"
+#include "solarSystem.hpp"
 #include <iostream>
 using Catch::Matchers::WithinRel;
 

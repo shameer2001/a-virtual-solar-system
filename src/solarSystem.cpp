@@ -1,9 +1,7 @@
-#include "../include/solarSystem.hpp"
+#include "solarSystem.hpp"
 #include <chrono>
 #include <cstdlib> // Include the cstdlib header for rand()
 #include <ctime>   // Include the ctime header for time()
-
-
 
 Particle InitialConditionGenerator::celestialBody(double mass, double distance) // Mass is relative to the sun and distance is that between body and sun
 {
@@ -15,7 +13,7 @@ Particle InitialConditionGenerator::celestialBody(double mass, double distance) 
 
         return Particle {mass, pos_sun, vel_sun, acc_sun};
     }
-
+    
     else {
         // Seed the random number generator
         std::srand(std::time(0));
@@ -28,7 +26,7 @@ Particle InitialConditionGenerator::celestialBody(double mass, double distance) 
         return Particle {mass, pos, vel, acc};
     }
 
-}
+} 
 
   
 
@@ -47,7 +45,6 @@ std::vector<Particle> InitialConditionGenerator::solarSystemList() {
 
 
     return std::vector<Particle> {theSun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune};
-  }
-
+}
 
 

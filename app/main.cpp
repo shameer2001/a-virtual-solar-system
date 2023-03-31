@@ -1,8 +1,7 @@
 #include <iostream>
 #include "particle.hpp"
-#include <chrono>
-#include <cstdlib> // Include the cstdlib header for rand()
-#include <ctime>   // Include the ctime header for time()
+#include "solarSystem.hpp"
+
 
 
 
@@ -64,11 +63,7 @@ int main(int argc, char *argv[])
     }
 
 
-    else 
-    {
-      help();
-      return 0;
-    }
+
 
   }
 
