@@ -1,7 +1,5 @@
 #include <iostream>
 #include "particle.hpp"
-#include "solarSystem.hpp"
-
 
 
 
@@ -63,7 +61,11 @@ int main(int argc, char *argv[])
     }
 
 
-
+    else 
+    {
+      help();
+      return 0;
+    }
 
   }
 
