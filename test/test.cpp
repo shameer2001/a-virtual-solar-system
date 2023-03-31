@@ -253,7 +253,8 @@ TEST_CASE("Ensure a particle with two equally sized particles an equal distance 
 
 
 TEST_CASE("Test initial condition generator class", "[CommandLineApp]") {
-    InitialConditionGenerator icg;
+    SolarSystem solar_system;
+    solar_system.InitialConditionGenerator();
 
     SECTION("Ensure Sun is instantiated correctly", "[CommandLineApp]") {
         double mass_exp = 1.0;
@@ -261,7 +262,7 @@ TEST_CASE("Test initial condition generator class", "[CommandLineApp]") {
         Eigen::Vector3d vel_exp{0.0, 0.0, 0.0};
         Eigen::Vector3d acc_exp{0.0, 0.0, 0.0};
 
-        Particle sun = icg.solarSystemList()[0];
+        Particle sun = solar_system.getCelestialBodyList()[0];
 
         REQUIRE( sun.getMass() == mass_exp );
         REQUIRE( sun.getPosition() == pos_exp );
@@ -272,20 +273,20 @@ TEST_CASE("Test initial condition generator class", "[CommandLineApp]") {
 
     SECTION("Ensure size of list is correct", "[CommandLineApp]") {
 
-        REQUIRE( icg.solarSystemList().size() == 9 );
+        REQUIRE( solar_system.getCelestialBodyList().size() == 9 );
     }
 
 
     SECTION("Ensure mass of planets is correct", "[CommandLineApp]") {
 
-        double mercury_mass = icg.solarSystemList()[1].getMass();
-        double venus_mass = icg.solarSystemList()[2].getMass();
-        double earth_mass = icg.solarSystemList()[3].getMass();
-        double mars_mass = icg.solarSystemList()[4].getMass();
-        double jupiter_mass = icg.solarSystemList()[5].getMass();
-        double saturn_mass = icg.solarSystemList()[6].getMass();
-        double uranus_mass = icg.solarSystemList()[7].getMass();
-        double neptune_mass = icg.solarSystemList()[8].getMass();
+        double mercury_mass = solar_system.getCelestialBodyList()[1].getMass();
+        double venus_mass = solar_system.getCelestialBodyList()[2].getMass();
+        double earth_mass = solar_system.getCelestialBodyList()[3].getMass();
+        double mars_mass = solar_system.getCelestialBodyList()[4].getMass();
+        double jupiter_mass = solar_system.getCelestialBodyList()[5].getMass();
+        double saturn_mass = solar_system.getCelestialBodyList()[6].getMass();
+        double uranus_mass = solar_system.getCelestialBodyList()[7].getMass();
+        double neptune_mass = solar_system.getCelestialBodyList()[8].getMass();
 
         double mercury_mass_exp = 1.0/6023600.0;
         double venus_mass_exp = 1.0/408524.0;

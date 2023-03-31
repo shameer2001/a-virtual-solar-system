@@ -3,7 +3,11 @@
 #include <cstdlib> // Include the cstdlib header for rand()
 #include <ctime>   // Include the ctime header for time()
 
-Particle InitialConditionGenerator::celestialBody(double mass, double distance) // Mass is relative to the sun and distance is that between body and sun
+SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system
+SolarSystem::SolarSystem(std::vector<Particle> in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list
+
+
+Particle SolarSystem::celestialBody(double mass, double distance) // Mass is relative to the sun and distance is that between body and sun
 {
     if (mass == 1.0 && distance == 0.0) // The sun
     {
@@ -13,7 +17,6 @@ Particle InitialConditionGenerator::celestialBody(double mass, double distance) 
 
         return Particle {mass, pos_sun, vel_sun, acc_sun};
     }
-    
     else {
         // Seed the random number generator
         std::srand(std::time(0));
@@ -28,10 +31,9 @@ Particle InitialConditionGenerator::celestialBody(double mass, double distance) 
 
 } 
 
-  
 
-
-std::vector<Particle> InitialConditionGenerator::solarSystemList() {
+// Generate Particle list for solar system bodies
+void SolarSystem::InitialConditionGenerator() {
 
     Particle theSun = celestialBody(1.0, 0.0);
     Particle mercury = celestialBody(1.0/6023600.0, 0.4);
@@ -43,8 +45,38 @@ std::vector<Particle> InitialConditionGenerator::solarSystemList() {
     Particle uranus = celestialBody(1.0/22962.0, 19.2);
     Particle neptune = celestialBody(1.0/19352.0, 30.1);
 
+    // Set private member value:
+    celestial_body_list.push_back(theSun);
+    celestial_body_list.push_back(mercury);
+    celestial_body_list.push_back(venus);
+    celestial_body_list.push_back(earth);
+    celestial_body_list.push_back(mars);
+    celestial_body_list.push_back(jupiter);
+    celestial_body_list.push_back(saturn);
+    celestial_body_list.push_back(uranus);
+    celestial_body_list.push_back(neptune);
 
-    return std::vector<Particle> {theSun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune};
 }
 
 
+std::vector<Particle> SolarSystem::getCelestialBodyList() {
+    return celestial_body_list; 
+}
+
+
+
+void SolarSystem::evolutionOfSolarSystem(double dt, double total_time) {
+
+    // Loop for full simulation time
+    for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
+
+        // Update acceleration felt by each body
+        for (auto& particle : celestial_body_list) {
+            sumAccelerations(celestial_body_list, particle);
+        }
+        // Update position and velocity of each body
+        for (auto& particle : celestial_body_list) {
+            particle.update(dt);
+        }
+    }
+}
