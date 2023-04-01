@@ -48,9 +48,11 @@ void SolarSystem::InitialConditionGenerator() {
         {1.0/19352.0, 30.1}      // Neptune
     };
 
+
     // Loop through vector to create Particle instances for each body and push into list
     for (const auto& [mass, distance] : mass_dist) {
-        auto body = std::make_shared<Particle>(celestialBody(mass, distance));
+
+        auto body = std::make_shared<Particle>(celestialBody(mass, distance)); // Make celestial body instance as shared pointers
         celestial_body_list.push_back(body);
     }
 }
