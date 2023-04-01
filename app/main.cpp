@@ -6,9 +6,10 @@
 void help() {
   std::cout << "Usage: solarSystemSimulator [options]\n"
             << "Options:\n"
-            << "  -t, --timestep           Set the timestep in seconds.\n"
-            << "  -s, --simulation-time    Set the total simulation time in seconds.\n"
-            << "  -h, --help               Show this help message.\n";
+            << "  -t, --timestep           Set the timestep.\n"
+            << "  -s, --simulation-time    Set the total simulation time.\n"
+            << "  -h, --help               Show this help message.\n"
+            << "Note: The units for the time arguments are in radians where 2pi represents one full earth cycle (i.e. one year).";
 }
 
 
