@@ -6,7 +6,11 @@
 using Catch::Matchers::WithinRel;
 
 TEST_CASE( "Particle sets mass correctly", "[particle]" ) {
-    Particle p{3.14};
+    Eigen::Vector3d pos_test(0.0, 0.3, 0.3);
+    Eigen::Vector3d vel_test(0.0, 0.0, 0.0);
+    Eigen::Vector3d acc_test(0.0, 0.0, 0.0);
+
+    Particle p{3.14, pos_test, vel_test, acc_test};
     REQUIRE_THAT( p.getMass(), WithinRel(3.14, 0.01) );
 }
 

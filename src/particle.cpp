@@ -1,8 +1,6 @@
 #include "particle.hpp"
 
-Particle::Particle(double in_mass) :
-    mass{in_mass}
-    {}
+
 Particle::Particle(double in_mass, Eigen::Vector3d& in_pos, Eigen::Vector3d& in_vel, Eigen::Vector3d& in_acc) :
     mass{in_mass}, position{in_pos}, velocity{in_vel}, acceleration{in_acc}
     {}  
