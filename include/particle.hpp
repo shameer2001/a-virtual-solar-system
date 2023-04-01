@@ -2,6 +2,7 @@
 #define particle_hpp
 
 #include <Eigen/Core>
+#include <memory>
 
 class Particle {
     public:
@@ -33,7 +34,7 @@ class Particle {
 Eigen::Vector3d calcAcceleration(const Particle& particle1, const Particle& particle2, double elipson = 0.0);
 
 bool operator==(const Particle& p1, const Particle& p2);
-void sumAccelerations(const std::vector<Particle>& particles, Particle& particle_main);
+void sumAccelerations(const std::vector<std::shared_ptr<Particle>>& particles, Particle& particle_main); // The list is of shared pointers of Particles to save memory
 
 
 

@@ -3,7 +3,7 @@
 #include <iostream>
 
 SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system
-SolarSystem::SolarSystem(std::vector<Particle> in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list (for testing)
+SolarSystem::SolarSystem(std::vector<std::shared_ptr<Particle>>& in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list (for testing)
 
 
 Particle SolarSystem::celestialBody(double mass, double distance) // Mass is relative to the sun and distance is that between body and sun
@@ -50,13 +50,15 @@ void SolarSystem::InitialConditionGenerator() {
 
     // Loop through vector to create Particle instances for each body and push into list
     for (const auto& [mass, distance] : mass_dist) {
-        celestial_body_list.push_back(celestialBody(mass, distance));
+        auto body = std::make_shared<Particle>(celestialBody(mass, distance));
+        celestial_body_list.push_back(body);
+        //celestial_body_list.push_back(celestialBody(mass, distance));
     }
 }
 
 
 
-std::vector<Particle> SolarSystem::getCelestialBodyList() {
+std::vector<std::shared_ptr<Particle>> SolarSystem::getCelestialBodyList() {
     return celestial_body_list; 
 }
 
@@ -69,11 +71,11 @@ void SolarSystem::evolutionOfSolarSystem(double dt, double total_time) {
 
         // Update acceleration felt by each body
         for (auto& particle : celestial_body_list) {
-            sumAccelerations(celestial_body_list, particle);
+            sumAccelerations(celestial_body_list, *particle);
         }
         // Update position and velocity of each body
         for (auto& particle : celestial_body_list) {
-            particle.update(dt);
+            particle->update(dt);
         }
     }
 }
@@ -86,20 +88,20 @@ void SolarSystem::printMessages() {
     for (int i =0; i < celestial_body_list.size(); i++) {
 
         // If Sun's position is unchanged (i.e initial position)
-        if(celestial_body_list[0].getPosition() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
+        if(celestial_body_list[0]->getPosition() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
 
             std::cout << "The initial position of " << names[i] << " is (" 
-            << celestial_body_list[i].getPosition()[0] << ", " 
-            << celestial_body_list[i].getPosition()[1] << ", "
-            << celestial_body_list[i].getPosition()[2]
+            << celestial_body_list[i]->getPosition()[0] << ", " 
+            << celestial_body_list[i]->getPosition()[1] << ", "
+            << celestial_body_list[i]->getPosition()[2]
             << ").\n";
         }
         // If Sun's position is changed (i.e. system has moved - final position)
         else {
             std::cout << "The final position of " << names[i] << " is (" 
-            << celestial_body_list[i].getPosition()[0] << ", " 
-            << celestial_body_list[i].getPosition()[1] << ", "
-            << celestial_body_list[i].getPosition()[2]
+            << celestial_body_list[i]->getPosition()[0] << ", " 
+            << celestial_body_list[i]->getPosition()[1] << ", "
+            << celestial_body_list[i]->getPosition()[2]
             << ").\n";   
         }
         std::cout << "" << std::endl;

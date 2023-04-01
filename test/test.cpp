@@ -197,8 +197,12 @@ TEST_CASE("Ensure that a list of particles that includes itself to a particle wi
     Particle p2{mass_test2, pos_test2, vel_test2, acc_test2};
     Particle p3{mass_test3, pos_test3, vel_test3, acc_test3};
 
-    std::vector<Particle> list_with_self{p1, p2, p3};
-    std::vector<Particle> list_wout_self{p2, p3}; // wout = without
+    auto p1_ptr = std::make_shared<Particle>(p1);
+    auto p2_ptr = std::make_shared<Particle>(p2);
+    auto p3_ptr = std::make_shared<Particle>(p3);
+
+    std::vector<std::shared_ptr<Particle>> list_with_self{p1_ptr, p2_ptr, p3_ptr};
+    std::vector<std::shared_ptr<Particle>> list_wout_self{p2_ptr, p3_ptr}; // wout = without
 
     sumAccelerations(list_with_self, p1);
     const Particle p1_with_self = p1;
@@ -238,7 +242,11 @@ TEST_CASE("Ensure a particle with two equally sized particles an equal distance 
     Particle p2{mass_test2, pos_test2, vel_test2, acc_test2};
     Particle p3{mass_test3, pos_test3, vel_test3, acc_test3};
 
-    std::vector<Particle> list{p1, p2, p3};
+    auto p1_ptr = std::make_shared<Particle>(p1);
+    auto p2_ptr = std::make_shared<Particle>(p2);
+    auto p3_ptr = std::make_shared<Particle>(p3);
+
+    std::vector<std::shared_ptr<Particle>> list{p1_ptr, p2_ptr, p3_ptr};
 
     sumAccelerations(list, p1);
     Eigen::Vector3d acc_zero(0.0, 0.0, 0.0);
@@ -265,7 +273,7 @@ TEST_CASE("Test initial condition generator class", "[SolarSystem]") {
         Eigen::Vector3d vel_exp{0.0, 0.0, 0.0};
         Eigen::Vector3d acc_exp{0.0, 0.0, 0.0};
 
-        Particle sun = solar_system.getCelestialBodyList()[0];
+        Particle sun = *(solar_system.getCelestialBodyList()[0]);
 
         REQUIRE( sun.getMass() == mass_exp );
         REQUIRE( sun.getPosition() == pos_exp );
@@ -282,14 +290,14 @@ TEST_CASE("Test initial condition generator class", "[SolarSystem]") {
 
     SECTION("Ensure mass of planets is correct", "[SolarSystem]") {
 
-        double mercury_mass = solar_system.getCelestialBodyList()[1].getMass();
-        double venus_mass = solar_system.getCelestialBodyList()[2].getMass();
-        double earth_mass = solar_system.getCelestialBodyList()[3].getMass();
-        double mars_mass = solar_system.getCelestialBodyList()[4].getMass();
-        double jupiter_mass = solar_system.getCelestialBodyList()[5].getMass();
-        double saturn_mass = solar_system.getCelestialBodyList()[6].getMass();
-        double uranus_mass = solar_system.getCelestialBodyList()[7].getMass();
-        double neptune_mass = solar_system.getCelestialBodyList()[8].getMass();
+        double mercury_mass = solar_system.getCelestialBodyList()[1]->getMass();
+        double venus_mass = solar_system.getCelestialBodyList()[2]->getMass();
+        double earth_mass = solar_system.getCelestialBodyList()[3]->getMass();
+        double mars_mass = solar_system.getCelestialBodyList()[4]->getMass();
+        double jupiter_mass = solar_system.getCelestialBodyList()[5]->getMass();
+        double saturn_mass = solar_system.getCelestialBodyList()[6]->getMass();
+        double uranus_mass = solar_system.getCelestialBodyList()[7]->getMass();
+        double neptune_mass = solar_system.getCelestialBodyList()[8]->getMass();
 
         double mercury_mass_exp = 1.0/6023600.0;
         double venus_mass_exp = 1.0/408524.0;
@@ -322,7 +330,7 @@ TEST_CASE("Check that solar system evolves correctly", "[SolarSystem]") {
     SolarSystem solar_system;
     solar_system.InitialConditionGenerator();
 
-    Particle sun = solar_system.getCelestialBodyList()[0];
+    std::shared_ptr<Particle> sun = solar_system.getCelestialBodyList()[0];
 
 
 
@@ -335,17 +343,17 @@ TEST_CASE("Check that solar system evolves correctly", "[SolarSystem]") {
 
         Particle body_test(mass_test, pos_test, vel_test, acc_test);
 
-        std::vector<Particle> sun_and_body{sun, body_test};
+        std::vector<std::shared_ptr<Particle>> sun_and_body{sun, std::make_shared<Particle>(body_test)};
         SolarSystem small_system(sun_and_body);
 
         small_system.evolutionOfSolarSystem(0.1, 0.1); // After one time steps
-        const Eigen::Vector3d body_pos_final = small_system.getCelestialBodyList()[1].getPosition();
-        const Eigen::Vector3d body_vel_final = small_system.getCelestialBodyList()[1].getVelocity();
-        const Eigen::Vector3d body_acc_final = small_system.getCelestialBodyList()[1].getAcceleration();
+        const Eigen::Vector3d body_pos_final = small_system.getCelestialBodyList()[1]->getPosition();
+        const Eigen::Vector3d body_vel_final = small_system.getCelestialBodyList()[1]->getVelocity();
+        const Eigen::Vector3d body_acc_final = small_system.getCelestialBodyList()[1]->getAcceleration();
 
-        const Eigen::Vector3d sun_pos_final = small_system.getCelestialBodyList()[0].getPosition();
-        const Eigen::Vector3d sun_vel_final = small_system.getCelestialBodyList()[0].getVelocity();
-        const Eigen::Vector3d sun_acc_final = small_system.getCelestialBodyList()[0].getAcceleration();
+        const Eigen::Vector3d sun_pos_final = small_system.getCelestialBodyList()[0]->getPosition();
+        const Eigen::Vector3d sun_vel_final = small_system.getCelestialBodyList()[0]->getVelocity();
+        const Eigen::Vector3d sun_acc_final = small_system.getCelestialBodyList()[0]->getAcceleration();
 
 
         // Expected values calculated by hand:
@@ -371,14 +379,14 @@ TEST_CASE("Check that solar system evolves correctly", "[SolarSystem]") {
 
     SECTION("Confirm that earth initial and final position is similar over 2pi time (one year)", "[SolarSystem]") {
 
-        Particle earth = solar_system.getCelestialBodyList()[3];
-        const Eigen::Vector3d earth_pos_initial = earth.getPosition();
+        std::shared_ptr<Particle> earth = solar_system.getCelestialBodyList()[3];
+        const Eigen::Vector3d earth_pos_initial = earth->getPosition();
 
-        std::vector<Particle> sun_and_earth{sun, earth};
+        std::vector<std::shared_ptr<Particle>> sun_and_earth{sun, earth};
         SolarSystem small_system(sun_and_earth);
 
         small_system.evolutionOfSolarSystem(0.01, 2 * M_PI);
-        const Eigen::Vector3d earth_pos_final = small_system.getCelestialBodyList()[1].getPosition();
+        const Eigen::Vector3d earth_pos_final = small_system.getCelestialBodyList()[1]->getPosition();
 
         REQUIRE( earth_pos_final.isApprox(earth_pos_initial, 0.6) ); // Close to original position (but slightly moved due to gravitational force of sun)
     }
@@ -386,14 +394,14 @@ TEST_CASE("Check that solar system evolves correctly", "[SolarSystem]") {
 
     SECTION("Confirm that earth initial and final position is similar for unnecessarily small dt over one year", "[SolarSystem]") {
 
-        Particle earth = solar_system.getCelestialBodyList()[3];
-        const Eigen::Vector3d earth_pos_initial = earth.getPosition();
+        std::shared_ptr<Particle> earth = solar_system.getCelestialBodyList()[3];
+        const Eigen::Vector3d earth_pos_initial = earth->getPosition();
 
-        std::vector<Particle> sun_and_earth{sun, earth};
+        std::vector<std::shared_ptr<Particle>> sun_and_earth{sun, earth};
         SolarSystem small_system(sun_and_earth);
 
         small_system.evolutionOfSolarSystem(0.0001, 2 * M_PI);
-        const Eigen::Vector3d earth_pos_final = small_system.getCelestialBodyList()[1].getPosition();
+        const Eigen::Vector3d earth_pos_final = small_system.getCelestialBodyList()[1]->getPosition();
 
         REQUIRE( earth_pos_final.isApprox(earth_pos_initial, 1e-2) );
     }
