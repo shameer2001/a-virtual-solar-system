@@ -14,11 +14,11 @@ TEST_CASE( "Particle sets mass correctly", "[particle]" ) {
 
 TEST_CASE( "Particle calculates velocity and postion correctly with 0 acceleration", "[particle]" ) {
     Eigen::Vector3d pos_test(2.3, 2.3, 2.3);
-    Eigen::Vector3d vel_test(4, 4, 4);
-    Eigen::Vector3d acc_test(0, 0, 0);
+    Eigen::Vector3d vel_test(4.0, 4.0, 4.0);
+    Eigen::Vector3d acc_test(0.0, 0.0, 0.0);
 
     Particle p{3.14, pos_test, vel_test, acc_test};
-    p.update(2);
+    p.update(2.0);
 
     Eigen::Vector3d pos_exp(10.3, 10.3, 10.3); // Using equation and calculator
     Eigen::Vector3d vel_exp(4, 4, 4); // Velocity shouldn't change with 0 acceleration
@@ -32,14 +32,14 @@ TEST_CASE( "Particle calculates velocity and postion correctly with 0 accelerati
 
 TEST_CASE( "Particle calculates velocity and postion correctly with constant acceleration", "[particle]" ) {
     Eigen::Vector3d pos_test(2.3, 2.3, 2.3);
-    Eigen::Vector3d vel_test(4, 4, 4);
-    Eigen::Vector3d acc_test(1, 1, 1); 
+    Eigen::Vector3d vel_test(4.0, 4.0, 4.0);
+    Eigen::Vector3d acc_test(1.0, 1.0, 1.0); 
 
     Particle p{3.14, pos_test, vel_test, acc_test};
-    p.update(2);
+    p.update(2.0);
 
     Eigen::Vector3d pos_exp(10.3, 10.3, 10.3); 
-    Eigen::Vector3d vel_exp(6, 6, 6); 
+    Eigen::Vector3d vel_exp(6.0, 6.0, 6.00); 
 
     REQUIRE( p.getPosition().isApprox(pos_exp) );
     REQUIRE( p.getVelocity().isApprox(vel_exp) );
@@ -50,8 +50,8 @@ TEST_CASE( "Particle calculates velocity and postion correctly with constant acc
 
 
 TEST_CASE( "Particle calculates velocity and postion correctly with artificial acceleration", "[particle]" ) {
-    Eigen::Vector3d pos_test(1, 0, 0);
-    Eigen::Vector3d vel_test(0, 1, 0);
+    Eigen::Vector3d pos_test(1.0, 0.0, 0.0);
+    Eigen::Vector3d vel_test(0.0, 1.0, 0.0);
     Eigen::Vector3d acc_test = -1 * pos_test; // Artificial acceleration
 
     Particle p{3.14, pos_test, vel_test, acc_test};
@@ -79,14 +79,14 @@ TEST_CASE( "Particle calculates velocity and postion correctly with artificial a
 TEST_CASE("The gravitational force/acceleration between two particles is as expected: calcAcceleration function", "[particle]") {
 
     SECTION("Test case 1; simple", "[particles]") {
-        Eigen::Vector3d pos_test1(0, 0, 0);
-        Eigen::Vector3d vel_test1(0, 0, 0);
-        Eigen::Vector3d acc_test1(1, 1, 1);
+        Eigen::Vector3d pos_test1(0.0, 0.0, 0.0);
+        Eigen::Vector3d vel_test1(0.0, 0.0, 0.0);
+        Eigen::Vector3d acc_test1(1.0, 1.0, 1.0);
         double mass_test1 = 1;
 
-        Eigen::Vector3d pos_test2(1, 1, 1);
-        Eigen::Vector3d vel_test2(0, 0, 0);
-        Eigen::Vector3d acc_test2(0, 0, 0);
+        Eigen::Vector3d pos_test2(1.0, 1.0, 1.0);
+        Eigen::Vector3d vel_test2(0.0, 0.0, 0.0);
+        Eigen::Vector3d acc_test2(0.0, 0.0, 0.0);
         double mass_test2 = 1;
 
         Particle p1(mass_test1, pos_test1, vel_test1, acc_test1);
@@ -100,15 +100,15 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
 
 
     SECTION("Test case 2; different xyz", "[particles]") {
-        Eigen::Vector3d pos_test1(0, 0, 0);
-        Eigen::Vector3d vel_test1(2, 3, 1);
-        Eigen::Vector3d acc_test1(4, 0, 1);
-        double mass_test1 = 4;
+        Eigen::Vector3d pos_test1(0.0, 0.0, 0.0);
+        Eigen::Vector3d vel_test1(2.0, 3.0, 1.0);
+        Eigen::Vector3d acc_test1(4.0, 0.0, 1.0);
+        double mass_test1 = 4.0;
 
-        Eigen::Vector3d pos_test2(1, 1, 2);
-        Eigen::Vector3d vel_test2(4, 5, 7);
-        Eigen::Vector3d acc_test2(1, 2, 3);
-        double mass_test2 = 1;
+        Eigen::Vector3d pos_test2(1.0, 1.0, 2.0);
+        Eigen::Vector3d vel_test2(4.0, 5.0, 7.0);
+        Eigen::Vector3d acc_test2(1.0, 2.0, 3.0);
+        double mass_test2 = 1.0;
 
         Particle p1(mass_test1, pos_test1, vel_test1, acc_test1);
         Particle p2(mass_test2, pos_test2, vel_test2, acc_test2);
@@ -122,15 +122,15 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
 
 
     SECTION("Test case 3; negative position", "[particles]") {
-        Eigen::Vector3d pos_test1(-4, -2, -5);
-        Eigen::Vector3d vel_test1(2, 3, 1);
-        Eigen::Vector3d acc_test1(4, 0, 1);
-        double mass_test1 = 4;
+        Eigen::Vector3d pos_test1(-4.0, -2.0, -5.0);
+        Eigen::Vector3d vel_test1(2.0, 3.0, 1.0);
+        Eigen::Vector3d acc_test1(4.0, 0.0, 1.0);
+        double mass_test1 = 4.0;
 
-        Eigen::Vector3d pos_test2(-1, -1, -2);
-        Eigen::Vector3d vel_test2(4, 5, 7);
-        Eigen::Vector3d acc_test2(1, 2, 3);
-        double mass_test2 = 1;
+        Eigen::Vector3d pos_test2(-1.0, -1.0, -2.0);
+        Eigen::Vector3d vel_test2(4.0, 5.0, 7.0);
+        Eigen::Vector3d acc_test2(1.0, 2.0, 3.0);
+        double mass_test2 = 1.0;
 
         Particle p1(mass_test1, pos_test1, vel_test1, acc_test1);
         Particle p2(mass_test2, pos_test2, vel_test2, acc_test2);
@@ -144,15 +144,15 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
 
 
     SECTION("Test case 4; negative positive", "[particles]") {
-        Eigen::Vector3d pos_test1(-4, -2, -5);
-        Eigen::Vector3d vel_test1(2, 3, 1);
-        Eigen::Vector3d acc_test1(4, 0, 1);
-        double mass_test1 = 4;
+        Eigen::Vector3d pos_test1(-4.0, -2.0, -5.0);
+        Eigen::Vector3d vel_test1(2.0, 3.0, 1.0);
+        Eigen::Vector3d acc_test1(4.0, 0.0, 1.0);
+        double mass_test1 = 4.0;
 
-        Eigen::Vector3d pos_test2(1, 1, 2);
-        Eigen::Vector3d vel_test2(4, 5, 7);
-        Eigen::Vector3d acc_test2(1, 2, 3);
-        double mass_test2 = 1;
+        Eigen::Vector3d pos_test2(1.0, 1.0, 2.0);
+        Eigen::Vector3d vel_test2(4.0, 5.0, 7.0);
+        Eigen::Vector3d acc_test2(1.0, 2.0, 3.0);
+        double mass_test2 = 1.0;
 
         Particle p1(mass_test1, pos_test1, vel_test1, acc_test1);
         Particle p2(mass_test2, pos_test2, vel_test2, acc_test2);
@@ -174,20 +174,20 @@ TEST_CASE("The gravitational force/acceleration between two particles is as expe
 
 TEST_CASE("Ensure that a list of particles that includes itself to a particle will not add any acceleration: sumAccelerations function", "[particle]") {
 
-    Eigen::Vector3d pos_test1(0, 0, 0);
-    Eigen::Vector3d vel_test1(2, 3, 1);
-    Eigen::Vector3d acc_test1(-4, -2, -1);
-    double mass_test1 = 4;
+    Eigen::Vector3d pos_test1(0.0, 0.0, 0.0);
+    Eigen::Vector3d vel_test1(2.0, 3.0, 1.0);
+    Eigen::Vector3d acc_test1(-4.0, -2.0, -1.0);
+    double mass_test1 = 4.0;
 
-    Eigen::Vector3d pos_test2(1, 1, 2);
-    Eigen::Vector3d vel_test2(4, 5, 7);
-    Eigen::Vector3d acc_test2(-1, -2, -3);
-    double mass_test2 = 1;
+    Eigen::Vector3d pos_test2(1.0, 1.0, 2.0);
+    Eigen::Vector3d vel_test2(4.0, 5.0, 7.0);
+    Eigen::Vector3d acc_test2(-1.0, -2.0, -3.0);
+    double mass_test2 = 1.0;
 
-    Eigen::Vector3d pos_test3(2, 2, 2);
-    Eigen::Vector3d vel_test3(5, 5, 5);
-    Eigen::Vector3d acc_test3(1, 2, 3);
-    double mass_test3 = 3;
+    Eigen::Vector3d pos_test3(2.0, 2.0, 2.0);
+    Eigen::Vector3d vel_test3(5.0, 5.0, 5.0);
+    Eigen::Vector3d acc_test3(1.0, 2.0, 3.0);
+    double mass_test3 = 3.0;
 
 
     Particle p1{mass_test1, pos_test1, vel_test1, acc_test1};
@@ -195,7 +195,7 @@ TEST_CASE("Ensure that a list of particles that includes itself to a particle wi
     Particle p3{mass_test3, pos_test3, vel_test3, acc_test3};
 
     std::vector<Particle> list_with_self{p1, p2, p3};
-    std::vector<Particle> list_wout_self{p2, p3};
+    std::vector<Particle> list_wout_self{p2, p3}; // wout = without
 
     sumAccelerations(list_with_self, p1);
     const Particle p1_with_self = p1;
@@ -215,20 +215,20 @@ TEST_CASE("Ensure that a list of particles that includes itself to a particle wi
 
 TEST_CASE("Ensure a particle with two equally sized particles an equal distance away will have 0 acceleration: sumAccelerations function", "[particle]") {
 
-    Eigen::Vector3d pos_test1(0, 0, 0);
-    Eigen::Vector3d vel_test1(2, 3, 1);
-    Eigen::Vector3d acc_test1(-4, -2, -1);
-    double mass_test1 = 4;
+    Eigen::Vector3d pos_test1(0.0, 0.0, 0.0);
+    Eigen::Vector3d vel_test1(2.0, 3.0, 1.0);
+    Eigen::Vector3d acc_test1(-4.0, -2.0, -1.00);
+    double mass_test1 = 4.0;
 
-    Eigen::Vector3d pos_test2(1, 0, 0);
-    Eigen::Vector3d vel_test2(5, 0, 0);
-    Eigen::Vector3d acc_test2(2, 0, 0);
-    double mass_test2 = 2;
+    Eigen::Vector3d pos_test2(1.0, 0.0, 0.0);
+    Eigen::Vector3d vel_test2(5.0, 0.0, 0.0);
+    Eigen::Vector3d acc_test2(2.0, 0.0, 0.0);
+    double mass_test2 = 2.0;
 
-    Eigen::Vector3d pos_test3(-1, 0, 0);
-    Eigen::Vector3d vel_test3(5, 0, 0);
-    Eigen::Vector3d acc_test3(2, 0, 0);
-    double mass_test3 = 2;
+    Eigen::Vector3d pos_test3(-1.0, 0.0, 0.0);
+    Eigen::Vector3d vel_test3(5.0, 0.0, 0.0);
+    Eigen::Vector3d acc_test3(2.0, 0.0, 0.0);
+    double mass_test3 = 2.0;
 
 
     Particle p1{mass_test1, pos_test1, vel_test1, acc_test1};
@@ -238,7 +238,7 @@ TEST_CASE("Ensure a particle with two equally sized particles an equal distance 
     std::vector<Particle> list{p1, p2, p3};
 
     sumAccelerations(list, p1);
-    Eigen::Vector3d acc_zero(0, 0, 0);
+    Eigen::Vector3d acc_zero(0.0, 0.0, 0.0);
 
 
     REQUIRE( p1.getAcceleration() == acc_zero );
@@ -252,11 +252,11 @@ TEST_CASE("Ensure a particle with two equally sized particles an equal distance 
 
 
 
-TEST_CASE("Test initial condition generator class", "[CommandLineApp]") {
+TEST_CASE("Test initial condition generator class", "[SolarSystem]") {
     SolarSystem solar_system;
     solar_system.InitialConditionGenerator();
 
-    SECTION("Ensure Sun is instantiated correctly", "[CommandLineApp]") {
+    SECTION("Ensure Sun is instantiated correctly", "[SolarSystem]") {
         double mass_exp = 1.0;
         Eigen::Vector3d pos_exp{0.0, 0.0, 0.0};
         Eigen::Vector3d vel_exp{0.0, 0.0, 0.0};
@@ -271,13 +271,13 @@ TEST_CASE("Test initial condition generator class", "[CommandLineApp]") {
     }
 
 
-    SECTION("Ensure size of list is correct", "[CommandLineApp]") {
+    SECTION("Ensure size of list is correct", "[SolarSystem]") {
 
         REQUIRE( solar_system.getCelestialBodyList().size() == 9 );
     }
 
 
-    SECTION("Ensure mass of planets is correct", "[CommandLineApp]") {
+    SECTION("Ensure mass of planets is correct", "[SolarSystem]") {
 
         double mercury_mass = solar_system.getCelestialBodyList()[1].getMass();
         double venus_mass = solar_system.getCelestialBodyList()[2].getMass();
@@ -309,4 +309,89 @@ TEST_CASE("Test initial condition generator class", "[CommandLineApp]") {
 
     }
 
+}
+
+
+
+
+
+TEST_CASE("Check that solar system evolves correctly", "[SolarSystem]") {
+    SolarSystem solar_system;
+    solar_system.InitialConditionGenerator();
+
+    Particle sun = solar_system.getCelestialBodyList()[0];
+
+
+
+    SECTION("Check that system evolves correctly for sun and 1 body", "[SolarSystem]") {
+
+        Eigen::Vector3d pos_test(1.0, 1.0, 1.0);
+        Eigen::Vector3d vel_test(1.0, 1.0, 1.0);
+        Eigen::Vector3d acc_test(0.0, 0.0, 0.0);
+        double mass_test = 0.5; // Mass of body is half of sun's
+
+        Particle body_test(mass_test, pos_test, vel_test, acc_test);
+
+        std::vector<Particle> sun_and_body{sun, body_test};
+        SolarSystem small_system(sun_and_body);
+
+        small_system.evolutionOfSolarSystem(0.1, 0.1); // After one time steps
+        const Eigen::Vector3d body_pos_final = small_system.getCelestialBodyList()[1].getPosition();
+        const Eigen::Vector3d body_vel_final = small_system.getCelestialBodyList()[1].getVelocity();
+        const Eigen::Vector3d body_acc_final = small_system.getCelestialBodyList()[1].getAcceleration();
+
+        const Eigen::Vector3d sun_pos_final = small_system.getCelestialBodyList()[0].getPosition();
+        const Eigen::Vector3d sun_vel_final = small_system.getCelestialBodyList()[0].getVelocity();
+        const Eigen::Vector3d sun_acc_final = small_system.getCelestialBodyList()[0].getAcceleration();
+
+
+        // Expected values calculated by hand:
+
+        Eigen::Vector3d body_acc_exp(-1.0/pow(3, 3.0/2.0), -1.0/pow(3, 3.0/2.0), -1.0/pow(3, 3.0/2.0));
+        Eigen::Vector3d body_pos_exp(1.1, 1.1, 1.1);
+        Eigen::Vector3d body_vel_exp(1 + -0.1/pow(3, 3.0/2.0), 1 + -0.1/pow(3, 3.0/2.0), 1 + -0.1/pow(3, 3.0/2.0));
+
+        Eigen::Vector3d sun_acc_exp(0.5/pow(3, 3.0/2.0), 0.5/pow(3, 3.0/2.0), 0.5/pow(3, 3.0/2.0));
+        Eigen::Vector3d sun_pos_exp(0.0, 0.0, 0.0); // Position should be same since position is taken relative to sun
+        Eigen::Vector3d sun_vel_exp(0.05/pow(3, 3.0/2.0), 0.05/pow(3, 3.0/2.0), 0.05/pow(3, 3.0/2.0));
+
+
+        REQUIRE( sun_acc_final.isApprox(sun_acc_exp, 1e-2) );
+        REQUIRE( sun_pos_final.isApprox(sun_pos_exp) );
+        REQUIRE( sun_vel_final.isApprox(sun_vel_exp, 1e-2) );
+
+        REQUIRE( body_acc_final.isApprox(body_acc_exp, 1e-2) );
+        REQUIRE( body_pos_final.isApprox(body_pos_exp, 1e-2) );
+        REQUIRE( body_vel_final.isApprox(body_vel_exp, 1e-2) );
+    }
+
+
+    SECTION("Confirm that earth initial and final position is similar over 2pi time (one year)", "[SolarSystem]") {
+
+        Particle earth = solar_system.getCelestialBodyList()[3];
+        const Eigen::Vector3d earth_pos_initial = earth.getPosition();
+
+        std::vector<Particle> sun_and_earth{sun, earth};
+        SolarSystem small_system(sun_and_earth);
+
+        small_system.evolutionOfSolarSystem(0.01, 2 * M_PI);
+        const Eigen::Vector3d earth_pos_final = small_system.getCelestialBodyList()[1].getPosition();
+
+        REQUIRE( earth_pos_final.isApprox(earth_pos_initial, 0.6) ); // Close to original position (but slightly moved due to gravitational force of sun)
+    }
+
+
+    SECTION("Confirm that earth initial and final position is similar for unnecessarily small dt over one year", "[SolarSystem]") {
+
+        Particle earth = solar_system.getCelestialBodyList()[3];
+        const Eigen::Vector3d earth_pos_initial = earth.getPosition();
+
+        std::vector<Particle> sun_and_earth{sun, earth};
+        SolarSystem small_system(sun_and_earth);
+
+        small_system.evolutionOfSolarSystem(0.0001, 2 * M_PI);
+        const Eigen::Vector3d earth_pos_final = small_system.getCelestialBodyList()[1].getPosition();
+
+        REQUIRE( earth_pos_final.isApprox(earth_pos_initial, 1e-2) );
+    }
 }
