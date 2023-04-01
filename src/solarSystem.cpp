@@ -1,8 +1,5 @@
 #include "solarSystem.hpp"
 #include <chrono>
-#include <cstdlib> // Include the cstdlib header for rand()
-#include <ctime>   // Include the ctime header for time()
-#include <memory>
 #include <iostream>
 
 SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system

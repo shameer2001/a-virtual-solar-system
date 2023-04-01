@@ -2,7 +2,6 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include "particle.hpp"
 #include "solarSystem.hpp"
-#include <iostream>
 using Catch::Matchers::WithinRel;
 
 TEST_CASE( "Particle sets mass correctly", "[particle]" ) {
