@@ -52,7 +52,6 @@ void SolarSystem::InitialConditionGenerator() {
     for (const auto& [mass, distance] : mass_dist) {
         auto body = std::make_shared<Particle>(celestialBody(mass, distance));
         celestial_body_list.push_back(body);
-        //celestial_body_list.push_back(celestialBody(mass, distance));
     }
 }
 
