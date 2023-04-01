@@ -2,6 +2,7 @@
 #include <chrono>
 #include <cstdlib> // Include the cstdlib header for rand()
 #include <ctime>   // Include the ctime header for time()
+#include <memory>
 
 SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system
 SolarSystem::SolarSystem(std::vector<Particle> in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list
@@ -35,28 +36,26 @@ Particle SolarSystem::celestialBody(double mass, double distance) // Mass is rel
 // Generate Particle list for solar system bodies
 void SolarSystem::InitialConditionGenerator() {
 
-    Particle theSun = celestialBody(1.0, 0.0);
-    Particle mercury = celestialBody(1.0/6023600.0, 0.4);
-    Particle venus = celestialBody(1.0/408524.0, 0.7);
-    Particle earth = celestialBody(1.0/332946.038, 1.0);
-    Particle mars = celestialBody(1.0/3098710.0, 1.5);
-    Particle jupiter = celestialBody(1.0/1047.55, 5.2);
-    Particle saturn = celestialBody(1.0/3499.0, 9.5);
-    Particle uranus = celestialBody(1.0/22962.0, 19.2);
-    Particle neptune = celestialBody(1.0/19352.0, 30.1);
+    // Store mass and distances in a vector:
+    std::vector<std::pair<double, double>> mass_dist = {
+     // {mass relative to sun, distance to sun relative to earth-sun distance}
+        {1.0, 0.0},              // Sun
+        {1.0/6023600.0, 0.4},    // Mercury
+        {1.0/408524.0, 0.7},     // Venus
+        {1.0/332946.038, 1.0},   // Earth
+        {1.0/3098710.0, 1.5},    // Mars
+        {1.0/1047.55, 5.2},      // Jupiter
+        {1.0/3499.0, 9.5},       // Saturn
+        {1.0/22962.0, 19.2},     // Uranus
+        {1.0/19352.0, 30.1}      // Neptune
+    };
 
-    // Set private member value:
-    celestial_body_list.push_back(theSun);
-    celestial_body_list.push_back(mercury);
-    celestial_body_list.push_back(venus);
-    celestial_body_list.push_back(earth);
-    celestial_body_list.push_back(mars);
-    celestial_body_list.push_back(jupiter);
-    celestial_body_list.push_back(saturn);
-    celestial_body_list.push_back(uranus);
-    celestial_body_list.push_back(neptune);
-
+    // Loop through vector to create Particle instances for each body and push into list
+    for (const auto& [mass, distance] : mass_dist) {
+        celestial_body_list.push_back(celestialBody(mass, distance));
+    }
 }
+
 
 
 std::vector<Particle> SolarSystem::getCelestialBodyList() {
