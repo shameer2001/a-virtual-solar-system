@@ -3,9 +3,10 @@
 #include <cstdlib> // Include the cstdlib header for rand()
 #include <ctime>   // Include the ctime header for time()
 #include <memory>
+#include <iostream>
 
 SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system
-SolarSystem::SolarSystem(std::vector<Particle> in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list
+SolarSystem::SolarSystem(std::vector<Particle> in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list (for testing)
 
 
 Particle SolarSystem::celestialBody(double mass, double distance) // Mass is relative to the sun and distance is that between body and sun
@@ -79,3 +80,32 @@ void SolarSystem::evolutionOfSolarSystem(double dt, double total_time) {
         }
     }
 }
+
+
+
+void SolarSystem::printMessages() {
+    std::vector<std::string> names{"Sun", "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus","Neptune"};
+
+    for (int i =0; i < celestial_body_list.size(); i++) {
+
+        // If position is unchanged (i.e initial position)
+        if(celestial_body_list[3].getPosition() == Eigen::Vector3d {1.0, 1.0, 1.0} ) {
+
+            std::cout << "The initial position of " << names[i] << " is (" 
+            << celestial_body_list[i].getPosition()[0] << ", " 
+            << celestial_body_list[i].getPosition()[1] << ", "
+            << celestial_body_list[i].getPosition()[2]
+            << ") relative to the initial earth-sun distance.\n";
+        }
+        // if position is changed (final position)
+        else {
+            std::cout << "The final position of " << names[i] << " is (" 
+            << celestial_body_list[i].getPosition()[0] << ", " 
+            << celestial_body_list[i].getPosition()[1] << ", "
+            << celestial_body_list[i].getPosition()[2]
+            << ") relative to the initial earth-sun distance.\n";   
+        }
+        std::cout << "" << std::endl;
+    }
+}
+

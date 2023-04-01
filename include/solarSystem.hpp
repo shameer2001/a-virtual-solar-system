@@ -16,6 +16,7 @@ class SolarSystem {
   std::vector<Particle> getCelestialBodyList();
 
   void evolutionOfSolarSystem(double dt, double total_time);
+  void printMessages();
 
   private:
   std::vector<Particle> celestial_body_list;
