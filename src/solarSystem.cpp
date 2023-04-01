@@ -88,22 +88,22 @@ void SolarSystem::printMessages() {
 
     for (int i =0; i < celestial_body_list.size(); i++) {
 
-        // If position is unchanged (i.e initial position)
-        if(celestial_body_list[3].getPosition() == Eigen::Vector3d {1.0, 1.0, 1.0} ) {
+        // If Sun's position is unchanged (i.e initial position)
+        if(celestial_body_list[0].getPosition() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
 
             std::cout << "The initial position of " << names[i] << " is (" 
             << celestial_body_list[i].getPosition()[0] << ", " 
             << celestial_body_list[i].getPosition()[1] << ", "
             << celestial_body_list[i].getPosition()[2]
-            << ") relative to the initial earth-sun distance.\n";
+            << ").\n";
         }
-        // if position is changed (final position)
+        // If Sun's position is changed (i.e. system has moved - final position)
         else {
             std::cout << "The final position of " << names[i] << " is (" 
             << celestial_body_list[i].getPosition()[0] << ", " 
             << celestial_body_list[i].getPosition()[1] << ", "
             << celestial_body_list[i].getPosition()[2]
-            << ") relative to the initial earth-sun distance.\n";   
+            << ").\n";   
         }
         std::cout << "" << std::endl;
     }

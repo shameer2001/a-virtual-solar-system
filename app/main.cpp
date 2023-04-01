@@ -1,5 +1,6 @@
 #include <iostream>
 #include "particle.hpp"
+#include "solarSystem.hpp"
 
 
 
@@ -17,8 +18,8 @@ void help() {
 int main(int argc, char *argv[]) 
 {
   // Parse command line arguments
-  bool dt = 0.0;
-  bool sim_time = 0.0;
+  double dt = 0.0;
+  double sim_time = 0.0;
 
   for (int i = 1; i < argc; i++)
   {
@@ -26,9 +27,9 @@ int main(int argc, char *argv[])
 
     if (arg == "-t" || arg == "--timestep")
     {
-      if (i + 1 < argc) 
+      if (i + 1 < argc) // Argument after --t is the timestep value
       {
-        dt = argv[i + 1]; // Argument after --t is the timestep value
+        dt = strtod(argv[i + 1], NULL); // Convert char to double
         i++;
       }
       else 
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
     {
       if (i + 1 < argc) 
       {
-        sim_time = argv[i + 1]; // Argument after --t is the filename
+        sim_time = strtod(argv[i + 1], NULL); 
         i++;
       }
       else 
@@ -69,6 +70,15 @@ int main(int argc, char *argv[])
     }
 
   }
+
+  SolarSystem solar_system;
+  solar_system.InitialConditionGenerator();
+  solar_system.printMessages();
+  solar_system.evolutionOfSolarSystem(dt, sim_time);
+  solar_system.printMessages();
+
+
+
 
   return 0;
 }
