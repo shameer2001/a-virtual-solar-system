@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     {
       if (i + 1 < argc) // Argument after --t is the timestep value
       {
-        dt = strtod(argv[i + 1], NULL); // Convert char to double
+        dt = strtod(argv[i + 1], NULL); // Convert char to double using strtod()
         i++;
       }
       else 
@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
 
   }
 
+  // Simulate solar system and it's evolution
   SolarSystem solar_system;
   solar_system.InitialConditionGenerator();
   solar_system.printMessages();
