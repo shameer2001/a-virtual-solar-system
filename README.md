@@ -46,8 +46,51 @@ You are expected to edit the `CMakeLists.txt` file in each folder to add or remo
 
 ## Usage Instructions
 
-You should fill in the instructions for using the app here.
+### Command Line Intreface
 
+Here is an example and its output:
+
+```
+./build/solarSystemSimulator -t 0.001 -s 6.28
+```
+
+```
+The initial position of Sun is (0, 0, 0).
+
+The initial position of Mercury is (0.23913, 0.320651, 0).
+
+The initial position of Venus is (0.418477, 0.561139, 0).
+
+The initial position of Earth is (0.597824, 0.801628, 0).
+
+The initial position of Mars is (0.896736, 1.20244, 0).
+
+The initial position of Jupiter is (3.10868, 4.16846, 0).
+
+The initial position of Saturn is (5.67933, 7.61546, 0).
+
+The initial position of Uranus is (11.4782, 15.3912, 0).
+
+The initial position of Neptune is (17.9945, 24.129, 0).
+
+The final position of Sun is (0.000313251, 0.000701112, 0).
+
+The final position of Mercury is (-0.282147, -0.370992, 0).
+
+The final position of Venus is (0.273363, -0.672404, 0).
+
+The final position of Earth is (0.654158, 0.773766, 0).
+
+The final position of Mars is (-0.544033, -1.40303, 0).
+
+The final position of Jupiter is (0.577121, 5.16823, 0).
+
+The final position of Saturn is (3.92777, 8.649, 0).
+
+The final position of Uranus is (10.2983, 16.2043, 0).
+
+The final position of Neptune is (17.0641, 24.7956, 0).
+```
 ## Credits
 
 This project is maintained by Dr. Jamie Quinn as part of UCL ARC's course, Research Computing in C++.

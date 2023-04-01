@@ -10,7 +10,7 @@ void help() {
             << "  -t, --timestep           Set the timestep.\n"
             << "  -s, --simulation-time    Set the total simulation time.\n"
             << "  -h, --help               Show this help message.\n"
-            << "Note: The units for the time arguments are in radians where 2pi represents one full earth cycle (i.e. one year).";
+            << "Note: The units for the time arguments are in radians where 2π represents one full earth cycle (i.e. one year).";
 }
 
 
@@ -20,6 +20,12 @@ int main(int argc, char *argv[])
   // Parse command line arguments
   double dt = 0.0;
   double sim_time = 0.0;
+
+  if (argc == 1) // When there are no arguments given
+  {
+    help();
+    return 1;
+  }
 
   for (int i = 1; i < argc; i++)
   {
@@ -57,13 +63,6 @@ int main(int argc, char *argv[])
 
 
     else if (arg == "-h" || arg == "--help")
-    {
-      help();
-      return 0;
-    }
-
-
-    else 
     {
       help();
       return 0;
