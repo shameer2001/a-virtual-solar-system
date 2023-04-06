@@ -32,18 +32,35 @@ void Particle::update(double dt) {
 
 
 
+// Kinetic and potential energies:
+
+double Particle::kineticEnergy() {
+    return 0.5 * mass * velocity.squaredNorm();
+}
+double Particle::potentialEnergy(const Particle& particle2) {
+    double denominator = (particle2.getPosition() - position).norm(); // Magnitude of the distance between the two particles
+    double numerator = -0.5 * (mass * particle2.getMass());
+
+    return numerator/denominator;
+}
+
+
+
+
+
 
 
 // Acceleration felt by particle j due to particle i
 Eigen::Vector3d calcAcceleration(const Particle& particle_i, const Particle& particle_j, double epsilon) {
     
-    Eigen::Vector3d d_ji = (particle_i.getPosition() - particle_j.getPosition()).cwiseAbs(); // Distance between particles i & j
+    Eigen::Vector3d r = particle_i.getPosition() - particle_j.getPosition(); // Distance between particles i & j
 
-    double denominator = pow(d_ji.squaredNorm()   +   epsilon * epsilon,    3.0/2.0);
+    double denominator = pow(r.squaredNorm()   +   epsilon * epsilon,    3.0/2.0);
     Eigen::Vector3d numerator = particle_j.getPosition() - particle_i.getPosition(); // Distance between particles j and i
 
     return particle_j.getMass() * (numerator/denominator);
 }
+
 
 
 

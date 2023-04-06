@@ -17,6 +17,9 @@ class Particle {
         // Update functions:
         void updateAcceleration(Eigen::Vector3d& acc);
         void update(double dt);
+
+        double kineticEnergy();
+        double potentialEnergy(const Particle& particle2);
         
 
         
