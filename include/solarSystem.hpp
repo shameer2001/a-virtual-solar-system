@@ -18,6 +18,11 @@ class SolarSystem {
   void evolutionOfSolarSystem(double dt, double total_time);
   void printMessages();
 
+
+  double totalKineticEnergy();
+  double totalPotentialEnergy();
+  double totalEnergy();
+
   private:
   std::vector<std::shared_ptr<Particle>> celestial_body_list;
 

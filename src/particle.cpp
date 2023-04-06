@@ -32,20 +32,6 @@ void Particle::update(double dt) {
 
 
 
-// Kinetic and potential energies:
-
-double Particle::kineticEnergy() {
-    return 0.5 * mass * velocity.squaredNorm();
-}
-double Particle::potentialEnergy(const Particle& particle2) {
-    double denominator = (particle2.getPosition() - position).norm(); // Magnitude of the distance between the two particles
-    double numerator = -0.5 * (mass * particle2.getMass());
-
-    return numerator/denominator;
-}
-
-
-
 
 
 

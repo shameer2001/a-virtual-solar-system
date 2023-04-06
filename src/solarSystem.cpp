@@ -109,3 +109,49 @@ void SolarSystem::printMessages() {
     }
 }
 
+
+
+
+
+double SolarSystem::totalKineticEnergy() {
+
+    double tot_KE_sum = 0.0;
+    
+    for(int i = 0; i < celestial_body_list.size(); i++) {
+        tot_KE_sum += celestial_body_list[i]->getMass() * (celestial_body_list[i]->getVelocity()).squaredNorm(); // KE equation
+    }
+    return tot_KE_sum * 0.5;
+}
+
+
+
+
+double SolarSystem::totalPotentialEnergy() {
+
+    double tot_PE_sum = 0.0;
+
+    // Loop for total PE
+    for (int i = 0; i < celestial_body_list.size(); i++) {
+
+        // Loop for PE of 1 particle
+        for (int j = 0; j < celestial_body_list.size(); j++) {
+
+            // If the particle in the list is not the particle who's PE is being calculated
+            if ( i != j ) 
+            {
+                tot_PE_sum += ( celestial_body_list[i]->getMass() * celestial_body_list[j]->getMass() ) 
+                / ( celestial_body_list[j]->getPosition() - celestial_body_list[i]->getPosition() ).norm(); // The PE between two particles
+            }
+        }
+    }
+
+    return tot_PE_sum * -0.5;
+}
+
+
+
+
+
+double SolarSystem::totalEnergy() {
+    return totalKineticEnergy() + totalPotentialEnergy();
+}
