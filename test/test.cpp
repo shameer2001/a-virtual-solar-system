@@ -265,7 +265,7 @@ TEST_CASE("Ensure a particle with two equally sized particles an equal distance 
 
 TEST_CASE("Test initial condition generator class", "[SolarSystem]") {
     SolarSystem solar_system;
-    solar_system.InitialConditionGenerator();
+    solar_system.initialConditionGenerator();
 
     SECTION("Ensure Sun is instantiated correctly", "[SolarSystem]") {
         double mass_exp = 1.0;
@@ -328,7 +328,7 @@ TEST_CASE("Test initial condition generator class", "[SolarSystem]") {
 
 TEST_CASE("Check that solar system evolves correctly", "[SolarSystem]") {
     SolarSystem solar_system;
-    solar_system.InitialConditionGenerator();
+    solar_system.initialConditionGenerator();
 
     std::shared_ptr<Particle> sun = solar_system.getCelestialBodyList()[0];
 

@@ -32,7 +32,7 @@ Particle SolarSystem::celestialBody(double mass, double distance) // Mass is rel
 
 
 // Generate Particle list for solar system bodies
-void SolarSystem::InitialConditionGenerator() {
+void SolarSystem::initialConditionGenerator() {
 
     // Store mass and distances in a vector:
     std::vector<std::pair<double, double>> mass_dist = {
@@ -47,7 +47,7 @@ void SolarSystem::InitialConditionGenerator() {
         {1.0/22962.0, 19.2},     // Uranus
         {1.0/19352.0, 30.1}      // Neptune
     };
-
+    celestial_body_list.clear(); // Ensure list is empty
 
     // Loop through vector to create Particle instances for each body and push into list
     for (const auto& [mass, distance] : mass_dist) {
@@ -88,8 +88,8 @@ void SolarSystem::printMessages() {
 
     for (int i =0; i < celestial_body_list.size(); i++) {
 
-        // If Sun's position is unchanged (i.e initial position)
-        if(celestial_body_list[0]->getPosition() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
+        // If Sun's acceleration is unchanged 
+        if(celestial_body_list[0]->getAcceleration() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
 
             std::cout << "The initial position of " << names[i] << " is (" 
             << celestial_body_list[i]->getPosition()[0] << ", " 
@@ -97,7 +97,7 @@ void SolarSystem::printMessages() {
             << celestial_body_list[i]->getPosition()[2]
             << ").\n";
         }
-        // If Sun's position is changed (i.e. system has moved - final position)
+        // If Sun's acceleration is changed (i.e. simulation has ran)
         else {
             std::cout << "The final position of " << names[i] << " is (" 
             << celestial_body_list[i]->getPosition()[0] << ", " 
@@ -105,8 +105,9 @@ void SolarSystem::printMessages() {
             << celestial_body_list[i]->getPosition()[2]
             << ").\n";   
         }
-        std::cout << "" << std::endl;
     }
+    std::cout << "" << std::endl;
+
 }
 
 
@@ -154,4 +155,28 @@ double SolarSystem::totalPotentialEnergy() {
 
 double SolarSystem::totalEnergy() {
     return totalKineticEnergy() + totalPotentialEnergy();
+}
+
+
+
+
+void SolarSystem::printEnergyMessages() {
+
+    // If Sun's acceleration is unchanged
+    if(celestial_body_list[0]->getAcceleration() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
+
+    std::cout << "The initial total kinetic energy of the system is " << totalKineticEnergy() << "\n"
+                << "The initial total potential energy of the system is " << totalPotentialEnergy() << "\n"
+                << "The initial total energy of the system is " << totalEnergy() << "\n"
+    << std::endl;
+    }
+
+    // If Sun's acceleration is changed (i.e. simulation has ran)
+    else {
+    std::cout << "The final total kinetic energy of the system is " << totalKineticEnergy() << "\n"
+                << "The final total potential energy of the system is " << totalPotentialEnergy() << "\n"
+                << "The final total energy of the system is " << totalEnergy() << "\n"
+    << std::endl;
+    }
+
 }
