@@ -56,150 +56,132 @@ Here is an example and its output:
 
 ```
 The initial position of Sun is (0, 0, 0).
+The initial position of Mercury is (-0.362857, -0.168329, 0).
+The initial position of Venus is (-0.635, -0.294576, 0).
+The initial position of Earth is (-0.907143, -0.420823, 0).
+The initial position of Mars is (-1.36071, -0.631235, 0).
+The initial position of Jupiter is (-4.71714, -2.18828, 0).
+The initial position of Saturn is (-8.61786, -3.99782, 0).
+The initial position of Uranus is (-17.4171, -8.07981, 0).
+The initial position of Neptune is (-27.305, -12.6668, 0).
 
-The initial position of Mercury is (0.23913, 0.320651, 0).
-
-The initial position of Venus is (0.418477, 0.561139, 0).
-
-The initial position of Earth is (0.597824, 0.801628, 0).
-
-The initial position of Mars is (0.896736, 1.20244, 0).
-
-The initial position of Jupiter is (3.10868, 4.16846, 0).
-
-The initial position of Saturn is (5.67933, 7.61546, 0).
-
-The initial position of Uranus is (11.4782, 15.3912, 0).
-
-The initial position of Neptune is (17.9945, 24.129, 0).
-
-The final position of Sun is (0.000313251, 0.000701112, 0).
-
-The final position of Mercury is (-0.282147, -0.370992, 0).
-
-The final position of Venus is (0.273363, -0.672404, 0).
-
-The final position of Earth is (0.654158, 0.773766, 0).
-
-The final position of Mars is (-0.544033, -1.40303, 0).
-
-The final position of Jupiter is (0.577121, 5.16823, 0).
-
-The final position of Saturn is (3.92777, 8.649, 0).
-
-The final position of Uranus is (10.2983, 16.2043, 0).
-
-The final position of Neptune is (17.0641, 24.7956, 0).
+The final position of Sun is (-0.000609735, -0.000468373, 0).
+The final position of Mercury is (0.422259, 0.1975, 0).
+The final position of Venus is (0.0746785, 0.72202, 0).
+The final position of Earth is (-0.941993, -0.373222, 0).
+The final position of Mars is (1.14375, 0.977918, 0).
+The final position of Jupiter is (-2.9643, -4.27277, 0).
+The final position of Saturn is (-7.56787, -5.74108, 0).
+The final position of Uranus is (-16.7655, -9.35697, 0).
+The final position of Neptune is (-26.8033, -13.6964, 0).
 ```
+<br/>
+
 
 ## Energy of the System
 
-For `dt = 0.0001` and total simulation time being 100 years:
+### For all timesteps:
 
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
+The initial total kinetic energy of the system is 0.000112389 \
+The initial total potential energy of the system is -0.00022485 \
+The initial total energy of the system is -0.000112461 
 
-The final total kinetic energy of the system is 0.000112535
-The final total potential energy of the system is -0.000224275
-The final total energy of the system is -0.00011174
-```
+### For `dt = 0.0001` and total simulation time being 100 years:
 
+The final total kinetic energy of the system is 0.000112392 \
+The final total potential energy of the system is -0.000224841 \
+The final total energy of the system is -0.000112448 
 
-For `dt = 0.001` and total simulation time being 100 years:
+### For `dt = 0.001` and total simulation time being 100 years:
 
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
+The final total kinetic energy of the system is 0.000112293 \
+The final total potential energy of the system is -0.000224637 \
+The final total energy of the system is -0.000112344 
 
-The final total kinetic energy of the system is 0.000110592
-The final total potential energy of the system is -0.000220448
-The final total energy of the system is -0.000109856
-```
+### For `dt = 0.01` and total simulation time being 100 years:
 
+The final total kinetic energy of the system is 0.000111844 \
+The final total potential energy of the system is -0.000223577 \
+The final total energy of the system is -0.000111733 
 
-For `dt = 0.001` and total simulation time being 100 years:
+### For `dt = 0.1` and total simulation time being 100 years:
 
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
+The final total kinetic energy of the system is 0.000110271 \
+The final total potential energy of the system is -0.000219878 \
+The final total energy of the system is -0.000109607 
 
-The final total kinetic energy of the system is 0.000110592
-The final total potential energy of the system is -0.000220448
-The final total energy of the system is -0.000109856
-```
+### For `dt = 1.0` and total simulation time being 100 years:
 
+The final total kinetic energy of the system is 0.000124885 \
+The final total potential energy of the system is -0.000213331 \
+The final total energy of the system is -8.84461e-05 
 
-For `dt = 0.01` and total simulation time being 100 years:
+### For `dt = 62.8` and total simulation time being 100 years:
 
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
+The final total kinetic energy of the system is 0.0416974 \
+The final total potential energy of the system is -5.03234e-05 \
+The final total energy of the system is 0.0416471 
 
-The final total kinetic energy of the system is 0.000102698
-The final total potential energy of the system is -0.000205227
-The final total energy of the system is -0.000102529
-```
+### For `dt = 100.0` and total simulation time being 100 years:
 
+The final total kinetic energy of the system is 0.105555 \
+The final total potential energy of the system is -3.30823e-05 \
+The final total energy of the system is 0.105522 
 
+### For `dt = 314.0` and total simulation time being 100 years:
 
-For `dt = 0.1` and total simulation time being 100 years:
-
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
-
-The final total kinetic energy of the system is 7.435e-05
-The final total potential energy of the system is -0.000149278
-The final total energy of the system is -7.49278e-05
-```
+The final total kinetic energy of the system is 1.03974 \
+The final total potential energy of the system is -1.11343e-05 \
+The final total energy of the system is 1.03973 
 
 
+<br/>
 
-For `dt = 1.0` and total simulation time being 100 years:
+## Runtime of the Simulation
 
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
+### With the Second Level Optimisation Flag:
 
-The final total kinetic energy of the system is 4.2686e-05
-The final total potential energy of the system is -6.98114e-05
-The final total energy of the system is -2.71254e-05
-```
+#### For `dt = 0.0001` and total simulation time being 100 years:
+The runtime of this simulation is 258.334 ms
+
+#### For `dt = 0.001` and total simulation time being 100 years:
+The runtime of this simulation is 24.4332 ms
+
+#### For `dt = 0.01` and total simulation time being 100 years:
+The runtime of this simulation is 2.22319 ms
+
+#### For `dt = 0.1` and total simulation time being 100 years:
+The runtime of this simulation is 0.223068 ms
+
+#### For `dt = 1.0` and total simulation time being 100 years:
+The runtime of this simulation is 0.036412 ms
+
+#### For `dt = 62.8` and total simulation time being 100 years:
+The runtime of this simulation is 0.016413 ms
+
+#### For `dt = 100.0` and total simulation time being 100 years:
+The runtime of this simulation is 0.016239 ms
+
+#### For `dt = 314.0` and total simulation time being 100 years:
+The runtime of this simulation is 0.016247 ms
+
+#### The total simulation time is: 285.299 ms
+#### The average simulation time is: 31.6999 ms
+
+<br/>
+
+### With No Optimisation Flag:
+
+#### For `dt = 0.01` and total simulation time being 100 years:
+The runtime of this simulation is 4.99966 ms
 
 
+### With vs Without Optimisation Flag:
 
-For `dt = 50.0` and total simulation time being 100 years:
+Comparing the runtime with `dt = 0.01` with and without the second level optimisation flag, we can see that with the optimisation flag the runtime is more than half that when with no optimisation flag. Therefore the second level optimisation flag `-O2` is effective and should be used in this simulation.
 
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
+<br/><br/>
 
-The final total kinetic energy of the system is 0.0264554
-The final total potential energy of the system is -2.67603e-06
-The final total energy of the system is 0.0264527
-```
-
-
-
-For `dt = 314.0` and total simulation time being 100 years:
-
-```
-The initial total kinetic energy of the system is 0.000112389
-The initial total potential energy of the system is -0.00022485
-The initial total energy of the system is -0.000112461
-
-The final total kinetic energy of the system is 1.03974
-The final total potential energy of the system is -1.03241e-06
-The final total energy of the system is 1.03974
-```
 
 ## Credits
 

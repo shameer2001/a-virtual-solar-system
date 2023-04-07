@@ -74,33 +74,106 @@ int main(int argc, char *argv[])
   // Simulate solar system and it's evolution
   SolarSystem solar_system;
 
-  auto start_time = std::chrono::high_resolution_clock::now();
-  solar_system.InitialConditionGenerator();
-
-  #ifdef DEBUG // Disable output when debug enabled in order to prevent inclusion in simulation time calculation
+  solar_system.initialConditionGenerator();
   solar_system.printMessages(); 
-  
-  std::cout << "The initial total kinetic energy of the system is " << solar_system.totalKineticEnergy() << "\n"
-            << "The initial total potential energy of the system is " << solar_system.totalPotentialEnergy() << "\n"
-            << "The initial total energy of the system is " << solar_system.totalEnergy() << "\n"
-  << std::endl;
-  #endif
-
+  solar_system.printEnergyMessages();
 
   solar_system.evolutionOfSolarSystem(dt, sim_time); // Run evolution simulation
+  solar_system.printMessages();
+  solar_system.printEnergyMessages();
+
+
+
+  // Run simulation for 1 year (2pi) and dt = 0.001:
+  std::cout << "=======Running the simulation for one year and with a dt of 0.001=======\n" << std::endl;
+  solar_system.initialConditionGenerator();
+  solar_system.printMessages();
+  solar_system.evolutionOfSolarSystem(0.001, 2 * M_PI); 
+  solar_system.printMessages();
+
+
+
+
+  // Run simulation for 1 year (2pi) and 8 different timesteps and print energies:
+  std::vector<double> dt_list{0.0001, 0.001, 0.01, 0.1, 1.0, 62.8, 100.0, 314.0};
+  std::cout << "=======Run simulation for 1 year and 8 different timesteps and PRINT ENERGIES=======\n" << std::endl;
+
+  for(double& dt: dt_list) {
+    std::cout << "-------Running for one year and with dt = " << dt << "-------\n" << std::endl;
+
+    solar_system.initialConditionGenerator();
+    solar_system.printMessages(); 
+    solar_system.printEnergyMessages();
+
+    solar_system.evolutionOfSolarSystem(dt, 2 * M_PI); 
+    solar_system.printMessages();
+    solar_system.printEnergyMessages();
+  }
+
+
+
+
+  // Run simulation for 1 year (2pi) and 8 different timesteps and print simulation time:
+  double total_runtime = 0.0;
+  std::cout << "=======Run simulation for 1 year and 8 different timesteps and PRINT SIMULATION TIME=======\n" << std::endl;
+  
+  for(double& dt: dt_list) {
+    std::cout << "-------Running for one year and with dt = " << dt << " -------\n" <<std::endl;
+
+    auto start_time = std::chrono::high_resolution_clock::now();
+    solar_system.initialConditionGenerator();
+
+    #ifdef DEBUG // Disable output when debug enabled in order to prevent inclusion in simulation time calculation
+    solar_system.printMessages(); 
+    solar_system.printEnergyMessages();
+    #endif
+
+    solar_system.evolutionOfSolarSystem(dt, 2 * M_PI); 
+    auto end_time = std::chrono::high_resolution_clock::now();
+
+    solar_system.printMessages();
+    solar_system.printEnergyMessages();
+
+    double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+    std::cout << "The runtime of this simulation is " 
+              << runtime << " ms\n"
+    << std::endl;
+
+    total_runtime += runtime;
+  }
+
+  std::cout << "The total simulation time is: " << total_runtime << " ms\n"
+            << "The average simulation time is: " << total_runtime / solar_system.getCelestialBodyList().size() << " ms\n"
+  << std::endl;
+
+
+
+
+
+  // Run simulation for 1 year (2pi) and dt = 0.01 and print simulation time (for 0 optimisation flags):
+  std::cout << "=======Running for one year and with dt = 0.01=======\n" <<std::endl;
+
+  auto start_time = std::chrono::high_resolution_clock::now();
+  solar_system.initialConditionGenerator();
+
+  #ifdef DEBUG
+  solar_system.printMessages(); 
+  solar_system.printEnergyMessages();
+  #endif
+
+  solar_system.evolutionOfSolarSystem(0.01, 2 * M_PI); 
   auto end_time = std::chrono::high_resolution_clock::now();
 
   solar_system.printMessages();
+  solar_system.printEnergyMessages();
 
-  std::cout << "The final total kinetic energy of the system is " << solar_system.totalKineticEnergy() << "\n"
-            << "The final total potential energy of the system is " << solar_system.totalPotentialEnergy() << "\n"
-            << "The final total energy of the system is " << solar_system.totalEnergy() << "\n"
+  double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+  std::cout << "The runtime of this simulation is " 
+            << runtime << " ms\n"
   << std::endl;
 
-  std::cout << "The runtime of the simulation is " 
-  << std::chrono::duration<double, std::milli>(end_time - start_time).count() 
-  << " ms"
-  << std::endl;
+
+
 
   return 0;
 }
