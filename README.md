@@ -180,6 +180,10 @@ The runtime of this simulation is 4.99966 ms
 
 Comparing the runtime with `dt = 0.01` with and without the second level optimisation flag, we can see that with the optimisation flag the runtime is more than half that when with no optimisation flag. Therefore the second level optimisation flag `-O2` is effective and should be used in this simulation.
 
+### Best timestep:
+
+The best timestep is one that balances performance/speed and accuracy. Looking at the total energy and simulation time, it sees that a timestep of 0.01 seems to be the best since the time is well below 1 millisecond and the final total energy is the same order of magnitude as the initial.
+
 <br/><br/>
 
 
