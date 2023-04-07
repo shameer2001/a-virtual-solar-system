@@ -1,6 +1,7 @@
 #include <iostream>
 #include "particle.hpp"
 #include "solarSystem.hpp"
+#include <chrono>
 
 
 
@@ -72,25 +73,34 @@ int main(int argc, char *argv[])
 
   // Simulate solar system and it's evolution
   SolarSystem solar_system;
-  solar_system.InitialConditionGenerator();
-  solar_system.printMessages();
 
+  auto start_time = std::chrono::high_resolution_clock::now();
+  solar_system.InitialConditionGenerator();
+
+  #ifdef DEBUG // Disable output when debug enabled in order to prevent inclusion in simulation time calculation
+  solar_system.printMessages(); 
+  
   std::cout << "The initial total kinetic energy of the system is " << solar_system.totalKineticEnergy() << "\n"
             << "The initial total potential energy of the system is " << solar_system.totalPotentialEnergy() << "\n"
             << "The initial total energy of the system is " << solar_system.totalEnergy() << "\n"
   << std::endl;
+  #endif
 
-  
-  solar_system.evolutionOfSolarSystem(dt, sim_time); // Run simulation
+
+  solar_system.evolutionOfSolarSystem(dt, sim_time); // Run evolution simulation
+  auto end_time = std::chrono::high_resolution_clock::now();
+
   solar_system.printMessages();
-
 
   std::cout << "The final total kinetic energy of the system is " << solar_system.totalKineticEnergy() << "\n"
             << "The final total potential energy of the system is " << solar_system.totalPotentialEnergy() << "\n"
-            << "The final total energy of the system is " << solar_system.totalEnergy() 
+            << "The final total energy of the system is " << solar_system.totalEnergy() << "\n"
   << std::endl;
 
-
+  std::cout << "The runtime of the simulation is " 
+  << std::chrono::duration<double, std::milli>(end_time - start_time).count() 
+  << " ms"
+  << std::endl;
 
   return 0;
 }
