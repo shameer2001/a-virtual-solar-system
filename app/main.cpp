@@ -74,9 +74,21 @@ int main(int argc, char *argv[])
   SolarSystem solar_system;
   solar_system.InitialConditionGenerator();
   solar_system.printMessages();
-  solar_system.evolutionOfSolarSystem(dt, sim_time);
+
+  std::cout << "The initial total kinetic energy of the system is " << solar_system.totalKineticEnergy() << "\n"
+            << "The initial total potential energy of the system is " << solar_system.totalPotentialEnergy() << "\n"
+            << "The initial total energy of the system is " << solar_system.totalEnergy() << "\n"
+  << std::endl;
+
+  
+  solar_system.evolutionOfSolarSystem(dt, sim_time); // Run simulation
   solar_system.printMessages();
 
+
+  std::cout << "The final total kinetic energy of the system is " << solar_system.totalKineticEnergy() << "\n"
+            << "The final total potential energy of the system is " << solar_system.totalPotentialEnergy() << "\n"
+            << "The final total energy of the system is " << solar_system.totalEnergy() 
+  << std::endl;
 
 
 

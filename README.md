@@ -46,7 +46,7 @@ You are expected to edit the `CMakeLists.txt` file in each folder to add or remo
 
 ## Usage Instructions
 
-### Command Line Intreface
+### Command Line Interface
 
 Here is an example and its output:
 
@@ -91,6 +91,116 @@ The final position of Uranus is (10.2983, 16.2043, 0).
 
 The final position of Neptune is (17.0641, 24.7956, 0).
 ```
+
+## Energy of the System
+
+For `dt = 0.0001` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 0.000112535
+The final total potential energy of the system is -0.000224275
+The final total energy of the system is -0.00011174
+```
+
+
+For `dt = 0.001` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 0.000110592
+The final total potential energy of the system is -0.000220448
+The final total energy of the system is -0.000109856
+```
+
+
+For `dt = 0.001` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 0.000110592
+The final total potential energy of the system is -0.000220448
+The final total energy of the system is -0.000109856
+```
+
+
+For `dt = 0.01` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 0.000102698
+The final total potential energy of the system is -0.000205227
+The final total energy of the system is -0.000102529
+```
+
+
+
+For `dt = 0.1` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 7.435e-05
+The final total potential energy of the system is -0.000149278
+The final total energy of the system is -7.49278e-05
+```
+
+
+
+For `dt = 1.0` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 4.2686e-05
+The final total potential energy of the system is -6.98114e-05
+The final total energy of the system is -2.71254e-05
+```
+
+
+
+For `dt = 50.0` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 0.0264554
+The final total potential energy of the system is -2.67603e-06
+The final total energy of the system is 0.0264527
+```
+
+
+
+For `dt = 314.0` and total simulation time being 100 years:
+
+```
+The initial total kinetic energy of the system is 0.000112389
+The initial total potential energy of the system is -0.00022485
+The initial total energy of the system is -0.000112461
+
+The final total kinetic energy of the system is 1.03974
+The final total potential energy of the system is -1.03241e-06
+The final total energy of the system is 1.03974
+```
+
 ## Credits
 
 This project is maintained by Dr. Jamie Quinn as part of UCL ARC's course, Research Computing in C++.
