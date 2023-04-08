@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
   solar_system.printMessages(); 
   printEnergyMessages(solar_system.getCelestialBodyList());
 
-  solar_system.evolutionOfSolarSystem(dt, sim_time); // Run evolution simulation
+  evolutionOfSolarSystem(solar_system.getCelestialBodyList(), dt, sim_time); // Run evolution simulation
   solar_system.printMessages();
   printEnergyMessages(solar_system.getCelestialBodyList());
 
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
   std::cout << "=======Running the simulation for one year and with a dt of 0.001=======\n" << std::endl;
   solar_system.generateInitialConditions();
   solar_system.printMessages();
-  solar_system.evolutionOfSolarSystem(0.001, 2 * M_PI); 
+  evolutionOfSolarSystem(solar_system.getCelestialBodyList(), 0.001, 2 * M_PI); 
   solar_system.printMessages();
 
 
@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
     printEnergyMessages(solar_system.getCelestialBodyList());
 
 
-    solar_system.evolutionOfSolarSystem(dt, 2 * M_PI); 
+    evolutionOfSolarSystem(solar_system.getCelestialBodyList(), dt, 2 * M_PI); 
     solar_system.printMessages();
     printEnergyMessages(solar_system.getCelestialBodyList());
 
@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 
     #endif
 
-    solar_system.evolutionOfSolarSystem(dt, 2 * M_PI); 
+    evolutionOfSolarSystem(solar_system.getCelestialBodyList(), dt, 2 * M_PI); 
     auto end_time = std::chrono::high_resolution_clock::now();
 
     solar_system.printMessages();
@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
 
   #endif
 
-  solar_system.evolutionOfSolarSystem(0.01, 2 * M_PI); 
+  evolutionOfSolarSystem(solar_system.getCelestialBodyList(), 0.01, 2 * M_PI); 
   auto end_time = std::chrono::high_resolution_clock::now();
 
   solar_system.printMessages();

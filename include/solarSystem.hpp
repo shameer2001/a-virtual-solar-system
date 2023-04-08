@@ -23,7 +23,6 @@ class SolarSystem : public InitialConditionGenerator  // Refactor class as subcl
   std::vector<std::shared_ptr<Particle>> generateInitialConditions() override; 
   std::vector<std::shared_ptr<Particle>> getCelestialBodyList(); // Mainly for tests
 
-  void evolutionOfSolarSystem(double dt, double total_time);
   void printMessages();
 
   private:
@@ -31,6 +30,8 @@ class SolarSystem : public InitialConditionGenerator  // Refactor class as subcl
 
 };
 
+
+void evolutionOfSolarSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time);
 
 double totalKineticEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list);
 double totalPotentialEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list);

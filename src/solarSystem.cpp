@@ -68,23 +68,6 @@ std::vector<std::shared_ptr<Particle>> SolarSystem::getCelestialBodyList() {
 
 
 
-void SolarSystem::evolutionOfSolarSystem(double dt, double total_time) {
-
-    // Loop for full simulation time
-    for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
-
-        // Update acceleration felt by each body
-        for (auto& particle : celestial_body_list) {
-            sumAccelerations(celestial_body_list, *particle);
-        }
-        // Update position and velocity of each body
-        for (auto& particle : celestial_body_list) {
-            particle->update(dt);
-        }
-    }
-}
-
-
 
 void SolarSystem::printMessages() {
     std::vector<std::string> names{"Sun", "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus","Neptune"};
@@ -116,6 +99,24 @@ void SolarSystem::printMessages() {
 
 
 
+
+
+// Evolution of any system of bodies as a separate function
+void evolutionOfSolarSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time) {
+
+    // Loop for full simulation time
+    for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
+
+        // Update acceleration felt by each body
+        for (auto& particle : particle_list) {
+            sumAccelerations(particle_list, *particle);
+        }
+        // Update position and velocity of each body
+        for (auto& particle : particle_list) {
+            particle->update(dt);
+        }
+    }
+}
 
 
 

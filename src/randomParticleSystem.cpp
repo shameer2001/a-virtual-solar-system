@@ -56,25 +56,7 @@ std::vector<std::shared_ptr<Particle>> RandomSystem::getCelestialBodyList() {
 }
 
 
-void RandomSystem::evolutionOfRandomSystem(double dt, double total_time) {
 
-    // Loop for full simulation time
-    for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
-
-        // Update acceleration felt by each body
-        for (auto& particle : celestial_body_list) {
-            sumAccelerations(celestial_body_list, *particle);
-        }
-        // Update position and velocity of each body
-        for (auto& particle : celestial_body_list) {
-            particle->update(dt);
-        }
-    }
-}
-
-
-
-void RandomSystem::printMessages() {}
 
 
 

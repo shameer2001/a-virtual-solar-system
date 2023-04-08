@@ -16,16 +16,6 @@ class RandomSystem : public InitialConditionGenerator  // Refactor class as subc
   std::vector<std::shared_ptr<Particle>> generateInitialConditions() override; 
   std::vector<std::shared_ptr<Particle>> getCelestialBodyList();
 
-  void evolutionOfRandomSystem(double dt, double total_time);
-  void printMessages();
-
-
-  double totalKineticEnergy();
-  double totalPotentialEnergy();
-  double totalEnergy();
-
-  void printEnergyMessages();
-
 
   private:
   int num_bodies;
