@@ -102,7 +102,7 @@ void SolarSystem::printMessages() {
 
 
 // Evolution of any system of bodies as a separate function
-void evolutionOfSolarSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time) {
+void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time) {
 
     // Loop for full simulation time
     for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
