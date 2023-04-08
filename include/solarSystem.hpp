@@ -11,7 +11,7 @@ class InitialConditionGenerator {
 };
 
 
-class SolarSystem: public InitialConditionGenerator  // Refactor class as subclass for base class InitialConditionGenerator
+class SolarSystem : public InitialConditionGenerator  // Refactor class as subclass for base class InitialConditionGenerator
 {
 
   public:

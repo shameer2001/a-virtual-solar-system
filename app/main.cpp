@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
   // Simulate solar system and it's evolution
   SolarSystem solar_system;
 
-  solar_system.initialConditionGenerator();
+  solar_system.generateInitialConditions();
   solar_system.printMessages(); 
   solar_system.printEnergyMessages();
 
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 
   // Run simulation for 1 year (2pi) and dt = 0.001:
   std::cout << "=======Running the simulation for one year and with a dt of 0.001=======\n" << std::endl;
-  solar_system.initialConditionGenerator();
+  solar_system.generateInitialConditions();
   solar_system.printMessages();
   solar_system.evolutionOfSolarSystem(0.001, 2 * M_PI); 
   solar_system.printMessages();
@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
   for(double& dt: dt_list) {
     std::cout << "-------Running for one year and with dt = " << dt << "-------\n" << std::endl;
 
-    solar_system.initialConditionGenerator();
+    solar_system.generateInitialConditions();
     solar_system.printMessages(); 
     solar_system.printEnergyMessages();
 
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
     std::cout << "-------Running for one year and with dt = " << dt << " -------\n" <<std::endl;
 
     auto start_time = std::chrono::high_resolution_clock::now();
-    solar_system.initialConditionGenerator();
+    solar_system.generateInitialConditions();
 
     #ifdef DEBUG // Disable output when debug enabled in order to prevent inclusion in simulation time calculation
     solar_system.printMessages(); 
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
   std::cout << "=======Running for one year and with dt = 0.01=======\n" <<std::endl;
 
   auto start_time = std::chrono::high_resolution_clock::now();
-  solar_system.initialConditionGenerator();
+  solar_system.generateInitialConditions();
 
   #ifdef DEBUG
   solar_system.printMessages(); 
