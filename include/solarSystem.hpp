@@ -4,15 +4,23 @@
 #include "particle.hpp"
 #include <memory>
 
-class SolarSystem {
+// Initial condition generator abstract class
+class InitialConditionGenerator {
+    public:
+    virtual std::vector<std::shared_ptr<Particle>> generateInitialConditions() = 0;
+};
+
+
+class SolarSystem: public InitialConditionGenerator  // Refactor class as subclass for base class InitialConditionGenerator
+{
 
   public:
   SolarSystem();
   SolarSystem(std::vector<std::shared_ptr<Particle>>& in_body_list);
   
   Particle celestialBody(double mass, double distance); // Mass is relative to the sun and distance is that between body and sun
-  
-  void initialConditionGenerator(); 
+
+  std::vector<std::shared_ptr<Particle>> generateInitialConditions() override; 
   std::vector<std::shared_ptr<Particle>> getCelestialBodyList();
 
   void evolutionOfSolarSystem(double dt, double total_time);

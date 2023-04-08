@@ -2,6 +2,7 @@
 #include <chrono>
 #include <iostream>
 
+
 SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system
 SolarSystem::SolarSystem(std::vector<std::shared_ptr<Particle>>& in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list (for testing)
 
@@ -32,7 +33,7 @@ Particle SolarSystem::celestialBody(double mass, double distance) // Mass is rel
 
 
 // Generate Particle list for solar system bodies
-void SolarSystem::initialConditionGenerator() {
+std::vector<std::shared_ptr<Particle>> SolarSystem::generateInitialConditions() {
 
     // Store mass and distances in a vector:
     std::vector<std::pair<double, double>> mass_dist = {
@@ -55,6 +56,8 @@ void SolarSystem::initialConditionGenerator() {
         auto body = std::make_shared<Particle>(celestialBody(mass, distance)); // Make celestial body instance as shared pointers
         celestial_body_list.push_back(body);
     }
+
+    return celestial_body_list;
 }
 
 
