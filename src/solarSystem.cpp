@@ -102,14 +102,14 @@ void SolarSystem::printMessages() {
 
 
 // Evolution of any system of bodies as a separate function
-void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time) {
+void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time, double epsilon = 0.0) {
 
     // Loop for full simulation time
     for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
 
         // Update acceleration felt by each body
         for (auto& particle : particle_list) {
-            sumAccelerations(particle_list, *particle);
+            sumAccelerations(particle_list, *particle, epsilon);
         }
         // Update position and velocity of each body
         for (auto& particle : particle_list) {

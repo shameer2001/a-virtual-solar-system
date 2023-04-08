@@ -30,10 +30,10 @@ class Particle {
 };
 
 
-Eigen::Vector3d calcAcceleration(const Particle& particle1, const Particle& particle2, double elipson = 0.0);
+Eigen::Vector3d calcAcceleration(const Particle& particle1, const Particle& particle2, double epsilon = 0.0);
 
 bool operator==(const Particle& p1, const Particle& p2);
-void sumAccelerations(const std::vector<std::shared_ptr<Particle>>& particles, Particle& particle_main); // The list is of shared pointers of Particles to save memory
+void sumAccelerations(const std::vector<std::shared_ptr<Particle>>& particles, Particle& particle_main, double epsilon = 0.0); // The list is of shared pointers of Particles to save memory
 
 
 
