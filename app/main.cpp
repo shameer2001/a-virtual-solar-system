@@ -9,8 +9,8 @@
 void help() {
   std::cout << "Usage: solarSystemSimulator [options]\n"
             << "Options:\n"
-            << "  -ss,  --solar-system       To simulate the solar system.\n"
-            << "  -rs,  --random-system      To simulate a system with random bodies.\n"
+            << "  -ss,  --solar-system       To simulate our solar system.\n"
+            << "  -rs,  --random-system      To simulate a random solar system with random bodies.\n"
             << "  -n,   --number             Set the number of bodies in the random system.\n"
             << "  -e,   --epsilon            Set the softening factor for the random system. Default is 0.0.\n"
             << "  -t,   --timestep           Set the timestep of the simulation.\n"
@@ -133,36 +133,34 @@ int main(int argc, char *argv[])
 
 
 
-
-
-
-
-
-
+  // Use pointer to base class generateInitialConditions method instead of calling from subclasses
+  // This will reduce code duplication and reduce memory usage
+  InitialConditionGenerator* systems[2]; // Pointer to initial condition generator base class
 
 
   if (solarsystem == true) {
 
+    systems[0] = new SolarSystem(); // Create object of SolarSystem class
+    SolarSystem* solar_system = dynamic_cast<SolarSystem*>(systems[0]); // Cast the already defined InitialConditionGenerator Pointer to a SolarSystem pointer. i.e. you can use solar_system as a pointer to SolarSystem and use the other methods exclusive to the SolarSystem class
+
     // Simulate solar system and it's evolution
-    SolarSystem solar_system;
+    systems[0]->generateInitialConditions();
+    solar_system->printMessages(); 
+    printEnergyMessages(solar_system->getCelestialBodyList());
 
-    solar_system.generateInitialConditions();
-    solar_system.printMessages(); 
-    printEnergyMessages(solar_system.getCelestialBodyList());
-
-    evolutionOfSystem(solar_system.getCelestialBodyList(), dt, sim_time); // Run evolution simulation
-    solar_system.printMessages();
-    printEnergyMessages(solar_system.getCelestialBodyList());
+    evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time); // Run evolution simulation
+    solar_system->printMessages();
+    printEnergyMessages(solar_system->getCelestialBodyList());
 
 
 
 
     // Run simulation for 1 year (2pi) and dt = 0.001:
     std::cout << "=======Running the simulation for one year and with a dt of 0.001=======\n" << std::endl;
-    solar_system.generateInitialConditions();
-    solar_system.printMessages();
-    evolutionOfSystem(solar_system.getCelestialBodyList(), 0.001, 2 * M_PI); 
-    solar_system.printMessages();
+    systems[0]->generateInitialConditions();
+    solar_system->printMessages();
+    evolutionOfSystem(solar_system->getCelestialBodyList(), 0.001, 2 * M_PI); 
+    solar_system->printMessages();
 
 
 
@@ -174,14 +172,14 @@ int main(int argc, char *argv[])
     for(double& dt: dt_list) {
       std::cout << "-------Running for one year and with dt = " << dt << "-------\n" << std::endl;
 
-      solar_system.generateInitialConditions();
-      solar_system.printMessages(); 
-      printEnergyMessages(solar_system.getCelestialBodyList());
+      systems[0]->generateInitialConditions();
+      solar_system->printMessages(); 
+      printEnergyMessages(solar_system->getCelestialBodyList());
 
 
-      evolutionOfSystem(solar_system.getCelestialBodyList(), dt, 2 * M_PI); 
-      solar_system.printMessages();
-      printEnergyMessages(solar_system.getCelestialBodyList());
+      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, 2 * M_PI); 
+      solar_system->printMessages();
+      printEnergyMessages(solar_system->getCelestialBodyList());
 
     }
 
@@ -196,19 +194,19 @@ int main(int argc, char *argv[])
       std::cout << "-------Running for one year and with dt = " << dt << " -------\n" <<std::endl;
 
       auto start_time = std::chrono::high_resolution_clock::now();
-      solar_system.generateInitialConditions();
+      systems[0]->generateInitialConditions();
 
       #ifdef DEBUG // Disable output when debug enabled in order to prevent inclusion in simulation time calculation
-      solar_system.printMessages(); 
-      printEnergyMessages(solar_system.getCelestialBodyList());
+      solar_system->printMessages(); 
+      printEnergyMessages(solar_system->getCelestialBodyList());
 
       #endif
 
-      evolutionOfSystem(solar_system.getCelestialBodyList(), dt, 2 * M_PI); 
+      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, 2 * M_PI); 
       auto end_time = std::chrono::high_resolution_clock::now();
 
-      solar_system.printMessages();
-      printEnergyMessages(solar_system.getCelestialBodyList());
+      solar_system->printMessages();
+      printEnergyMessages(solar_system->getCelestialBodyList());
 
 
       double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
@@ -220,7 +218,7 @@ int main(int argc, char *argv[])
     }
 
     std::cout << "The total simulation time is: " << total_runtime << " ms\n"
-              << "The average simulation time is: " << total_runtime / solar_system.getCelestialBodyList().size() << " ms\n"
+              << "The average simulation time is: " << total_runtime / solar_system->getCelestialBodyList().size() << " ms\n"
     << std::endl;
 
 
@@ -231,19 +229,19 @@ int main(int argc, char *argv[])
     std::cout << "=======Running for one year and with dt = 0.01=======\n" <<std::endl;
 
     auto start_time = std::chrono::high_resolution_clock::now();
-    solar_system.generateInitialConditions();
+    systems[0]->generateInitialConditions();
 
     #ifdef DEBUG
-    solar_system.printMessages(); 
-    printEnergyMessages(solar_system.getCelestialBodyList());
+    solar_system->printMessages(); 
+    printEnergyMessages(solar_system->getCelestialBodyList());
 
     #endif
 
-    evolutionOfSystem(solar_system.getCelestialBodyList(), 0.01, 2 * M_PI); 
+    evolutionOfSystem(solar_system->getCelestialBodyList(), 0.01, 2 * M_PI); 
     auto end_time = std::chrono::high_resolution_clock::now();
 
-    solar_system.printMessages();
-    printEnergyMessages(solar_system.getCelestialBodyList());
+    solar_system->printMessages();
+    printEnergyMessages(solar_system->getCelestialBodyList());
 
 
     double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
@@ -257,25 +255,26 @@ int main(int argc, char *argv[])
 
 
   else if (randomsystem == true) {
+    systems[1] = new RandomSystem(num_bodies); // Create object of RandomSystem class
+    RandomSystem* random_system = dynamic_cast<RandomSystem*>(systems[1]); // Cast the already defined InitialConditionGenerator Pointer to a RandomSystem pointer
 
-    // Simulate random system and it's evolution
-    RandomSystem random_system(num_bodies);
+    // Simulate random system and it's evolution:
 
-    random_system.generateInitialConditions();
-    printEnergyMessages(random_system.getCelestialBodyList());
+    systems[1]->generateInitialConditions();
+    printEnergyMessages(random_system->getCelestialBodyList());
 
 
 
     auto start_time = std::chrono::high_resolution_clock::now();
     
-    random_system.generateInitialConditions(); // Generate again to include in runtime (without excluding energy messages)
-    evolutionOfSystem(random_system.getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+    systems[1]->generateInitialConditions(); // Generate again to include in runtime (without excluding energy messages)
+    evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
     
     auto end_time = std::chrono::high_resolution_clock::now();
 
 
 
-    printEnergyMessages(random_system.getCelestialBodyList());
+    printEnergyMessages(random_system->getCelestialBodyList());
 
     double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
     std::cout << "The runtime of this simulation is " 
