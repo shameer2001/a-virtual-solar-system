@@ -31,7 +31,7 @@ class SolarSystem : public InitialConditionGenerator  // Refactor class as subcl
 };
 
 
-void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time);
+void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time, double epsilon = 0.0);
 
 double totalKineticEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list);
 double totalPotentialEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list);

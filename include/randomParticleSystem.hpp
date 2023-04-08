@@ -5,20 +5,20 @@
 
 
 
-class RandomSystem : public InitialConditionGenerator  // Refactor class as subclass for base class InitialConditionGenerator
+class RandomSystem : public InitialConditionGenerator  // Class as subclass for base class InitialConditionGenerator
 {
 
   public:
   RandomSystem(int body_num);
   
-  Particle celestialBody(double mass, double distance, double angle = 0.0); // Mass is relative to the sun and distance is that between body and sun
+  Particle celestialBody(double mass, double distance, double angle = 0.0); 
 
   std::vector<std::shared_ptr<Particle>> generateInitialConditions() override; 
   std::vector<std::shared_ptr<Particle>> getCelestialBodyList();
 
 
   private:
-  int num_bodies;
+  int num_bodies; // Including the star
   std::vector<std::shared_ptr<Particle>> celestial_body_list;
 
 
