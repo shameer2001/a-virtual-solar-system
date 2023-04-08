@@ -76,11 +76,12 @@ int main(int argc, char *argv[])
 
   solar_system.generateInitialConditions();
   solar_system.printMessages(); 
-  solar_system.printEnergyMessages();
+  printEnergyMessages(solar_system.getCelestialBodyList());
 
   solar_system.evolutionOfSolarSystem(dt, sim_time); // Run evolution simulation
   solar_system.printMessages();
-  solar_system.printEnergyMessages();
+  printEnergyMessages(solar_system.getCelestialBodyList());
+
 
 
 
@@ -103,11 +104,13 @@ int main(int argc, char *argv[])
 
     solar_system.generateInitialConditions();
     solar_system.printMessages(); 
-    solar_system.printEnergyMessages();
+    printEnergyMessages(solar_system.getCelestialBodyList());
+
 
     solar_system.evolutionOfSolarSystem(dt, 2 * M_PI); 
     solar_system.printMessages();
-    solar_system.printEnergyMessages();
+    printEnergyMessages(solar_system.getCelestialBodyList());
+
   }
 
 
@@ -125,14 +128,16 @@ int main(int argc, char *argv[])
 
     #ifdef DEBUG // Disable output when debug enabled in order to prevent inclusion in simulation time calculation
     solar_system.printMessages(); 
-    solar_system.printEnergyMessages();
+    printEnergyMessages(solar_system.getCelestialBodyList());
+
     #endif
 
     solar_system.evolutionOfSolarSystem(dt, 2 * M_PI); 
     auto end_time = std::chrono::high_resolution_clock::now();
 
     solar_system.printMessages();
-    solar_system.printEnergyMessages();
+    printEnergyMessages(solar_system.getCelestialBodyList());
+
 
     double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
     std::cout << "The runtime of this simulation is " 
@@ -158,14 +163,16 @@ int main(int argc, char *argv[])
 
   #ifdef DEBUG
   solar_system.printMessages(); 
-  solar_system.printEnergyMessages();
+  printEnergyMessages(solar_system.getCelestialBodyList());
+
   #endif
 
   solar_system.evolutionOfSolarSystem(0.01, 2 * M_PI); 
   auto end_time = std::chrono::high_resolution_clock::now();
 
   solar_system.printMessages();
-  solar_system.printEnergyMessages();
+  printEnergyMessages(solar_system.getCelestialBodyList());
+
 
   double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
   std::cout << "The runtime of this simulation is " 

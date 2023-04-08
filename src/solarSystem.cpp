@@ -117,12 +117,20 @@ void SolarSystem::printMessages() {
 
 
 
-double SolarSystem::totalKineticEnergy() {
 
+
+
+
+
+///////////////////////////////////////////////////////// Energy Functions /////////////////////////////////////////////////////////
+
+
+
+double totalKineticEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list) {
     double tot_KE_sum = 0.0;
     
-    for(int i = 0; i < celestial_body_list.size(); i++) {
-        tot_KE_sum += celestial_body_list[i]->getMass() * (celestial_body_list[i]->getVelocity()).squaredNorm(); // KE equation
+    for(int i = 0; i < particle_list.size(); i++) {
+        tot_KE_sum += particle_list[i]->getMass() * (particle_list[i]->getVelocity()).squaredNorm(); // KE equation
     }
     return tot_KE_sum * 0.5;
 }
@@ -130,21 +138,20 @@ double SolarSystem::totalKineticEnergy() {
 
 
 
-double SolarSystem::totalPotentialEnergy() {
-
+double totalPotentialEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list) {
     double tot_PE_sum = 0.0;
 
     // Loop for total PE
-    for (int i = 0; i < celestial_body_list.size(); i++) {
+    for (int i = 0; i < particle_list.size(); i++) {
 
         // Loop for PE of 1 particle
-        for (int j = 0; j < celestial_body_list.size(); j++) {
+        for (int j = 0; j < particle_list.size(); j++) {
 
             // If the particle in the list is not the particle who's PE is being calculated
             if ( i != j ) 
             {
-                tot_PE_sum += ( celestial_body_list[i]->getMass() * celestial_body_list[j]->getMass() ) 
-                / ( celestial_body_list[j]->getPosition() - celestial_body_list[i]->getPosition() ).norm(); // The PE between two particles
+                tot_PE_sum += ( particle_list[i]->getMass() * particle_list[j]->getMass() ) 
+                / ( particle_list[j]->getPosition() - particle_list[i]->getPosition() ).norm(); // The PE between two particles
             }
         }
     }
@@ -155,30 +162,28 @@ double SolarSystem::totalPotentialEnergy() {
 
 
 
-
-double SolarSystem::totalEnergy() {
-    return totalKineticEnergy() + totalPotentialEnergy();
+double totalEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list) {
+    return totalKineticEnergy(particle_list) + totalPotentialEnergy(particle_list);
 }
 
 
 
-
-void SolarSystem::printEnergyMessages() {
+void printEnergyMessages(const std::vector<std::shared_ptr<Particle>>& particle_list) {
 
     // If Sun's acceleration is unchanged
-    if(celestial_body_list[0]->getAcceleration() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
+    if(particle_list[0]->getAcceleration() == Eigen::Vector3d {0.0, 0.0, 0.0} ) {
 
-    std::cout << "The initial total kinetic energy of the system is " << totalKineticEnergy() << "\n"
-                << "The initial total potential energy of the system is " << totalPotentialEnergy() << "\n"
-                << "The initial total energy of the system is " << totalEnergy() << "\n"
+    std::cout << "The initial total kinetic energy of the system is " << totalKineticEnergy(particle_list) << "\n"
+                << "The initial total potential energy of the system is " << totalPotentialEnergy(particle_list) << "\n"
+                << "The initial total energy of the system is " << totalEnergy(particle_list) << "\n"
     << std::endl;
     }
 
     // If Sun's acceleration is changed (i.e. simulation has ran)
     else {
-    std::cout << "The final total kinetic energy of the system is " << totalKineticEnergy() << "\n"
-                << "The final total potential energy of the system is " << totalPotentialEnergy() << "\n"
-                << "The final total energy of the system is " << totalEnergy() << "\n"
+    std::cout << "The final total kinetic energy of the system is " << totalKineticEnergy(particle_list) << "\n"
+                << "The final total potential energy of the system is " << totalPotentialEnergy(particle_list) << "\n"
+                << "The final total energy of the system is " << totalEnergy(particle_list) << "\n"
     << std::endl;
     }
 
