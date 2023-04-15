@@ -75,7 +75,7 @@ The final position of Saturn is (-7.56787, -5.74108, 0).
 The final position of Uranus is (-16.7655, -9.35697, 0).
 The final position of Neptune is (-26.8033, -13.6964, 0).
 ```
-<br/>
+<br/><br/>
 
 
 ## Energy of the System
@@ -88,97 +88,105 @@ The initial total energy of the system is -0.000112461
 
 ### For `dt = 0.0001` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000112392 \
-The final total potential energy of the system is -0.000224841 \
-The final total energy of the system is -0.000112448 
+The final total kinetic energy of the system is 0.000112537 \
+The final total potential energy of the system is -0.000224276 \
+The final total energy of the system is -0.000111739
 
 ### For `dt = 0.001` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000112293 \
-The final total potential energy of the system is -0.000224637 \
-The final total energy of the system is -0.000112344 
+The final total kinetic energy of the system is 0.000110598 \
+The final total potential energy of the system is -0.000220453 \
+The final total energy of the system is -0.000109855
 
 ### For `dt = 0.01` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000111844 \
-The final total potential energy of the system is -0.000223577 \
-The final total energy of the system is -0.000111733 
+The final total kinetic energy of the system is 0.000102691 \
+The final total potential energy of the system is -0.000205216 \
+The final total energy of the system is -0.000102525
 
 ### For `dt = 0.1` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000110271 \
-The final total potential energy of the system is -0.000219878 \
-The final total energy of the system is -0.000109607 
+The final total kinetic energy of the system is 7.43482e-05 \
+The final total potential energy of the system is -0.000149266 \
+The final total energy of the system is -7.4918e-05
 
 ### For `dt = 1.0` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000124885 \
-The final total potential energy of the system is -0.000213331 \
-The final total energy of the system is -8.84461e-05 
+The final total kinetic energy of the system is 4.25877e-05 \
+The final total potential energy of the system is -6.97032e-05 \
+The final total energy of the system is -2.71155e-05
 
 ### For `dt = 62.8` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.0416974 \
-The final total potential energy of the system is -5.03234e-05 \
-The final total energy of the system is 0.0416471 
+The final total kinetic energy of the system is 0.041685 \
+The final total potential energy of the system is -2.15063e-06 \
+The final total energy of the system is 0.0416828
 
 ### For `dt = 100.0` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.105555 \
-The final total potential energy of the system is -3.30823e-05 \
-The final total energy of the system is 0.105522 
+The final total kinetic energy of the system is 0.10555 \
+The final total potential energy of the system is -1.54533e-06 \
+The final total energy of the system is 0.105548
 
 ### For `dt = 314.0` and total simulation time being 100 years:
 
 The final total kinetic energy of the system is 1.03974 \
-The final total potential energy of the system is -1.11343e-05 \
-The final total energy of the system is 1.03973 
+The final total potential energy of the system is -5.37401e-07 \
+The final total energy of the system is 1.03974
 
 
-<br/>
+<br/><br/>
 
 ## Runtime of the Simulation
+Note: The initial and final energies for each timestep are the same as the corresponding timesteps above.
 
 ### With the Second Level Optimisation Flag:
 
 #### For `dt = 0.0001` and total simulation time being 100 years:
-The runtime of this simulation is 258.334 ms
+The total simulation time is: 29559.6 ms \
+The average time per timestep is: 0.00470455 ms 
 
 #### For `dt = 0.001` and total simulation time being 100 years:
-The runtime of this simulation is 24.4332 ms
+The total simulation time is: 2215.19 ms \
+The average time per timestep is: 0.00352558 ms
 
 #### For `dt = 0.01` and total simulation time being 100 years:
-The runtime of this simulation is 2.22319 ms
+The total simulation time is: 233.723 ms \
+The average time per timestep is: 0.0037198 ms
 
 #### For `dt = 0.1` and total simulation time being 100 years:
-The runtime of this simulation is 0.223068 ms
+The total simulation time is: 33.5678 ms \
+The average time per timestep is: 0.00534179 ms
 
 #### For `dt = 1.0` and total simulation time being 100 years:
-The runtime of this simulation is 0.036412 ms
+The total simulation time is: 2.55285 ms \
+The average time per timestep is: 0.00405858 ms
 
 #### For `dt = 62.8` and total simulation time being 100 years:
-The runtime of this simulation is 0.016413 ms
+The total simulation time is: 0.074653 ms \
+The average time per timestep is: 0.00678664 ms
 
 #### For `dt = 100.0` and total simulation time being 100 years:
-The runtime of this simulation is 0.016239 ms
+The total simulation time is: 0.061043 ms \
+The average time per timestep is: 0.00872043 ms
 
 #### For `dt = 314.0` and total simulation time being 100 years:
-The runtime of this simulation is 0.016247 ms
+The total simulation time is: 0.043621 ms \
+The average time per timestep is: 0.0145403 ms
 
-#### The total simulation time is: 285.299 ms
-#### The average simulation time is: 31.6999 ms
 
 <br/>
 
 ### With No Optimisation Flag:
 
 #### For `dt = 0.01` and total simulation time being 100 years:
-The runtime of this simulation is 4.99966 ms
+The total simulation time is: 238.047 ms
+The average time per timestep is: 0.00378862 ms
 
 
 ### With vs Without Optimisation Flag:
 
-Comparing the runtime with `dt = 0.01` with and without the second level optimisation flag, we can see that with the optimisation flag the runtime is more than half that when with no optimisation flag. Therefore the second level optimisation flag `-O2` is effective and should be used in this simulation.
+Comparing the runtime with `dt = 0.01` with and without the second level optimisation flag, we can see that with the optimisation flag the runtime is virtually identical to that when with no optimisation flag. Therefore the second level optimisation flag `-O2` is not very effective here and is not of much benefit. 
 
 ### Best timestep:
 
@@ -186,6 +194,84 @@ The best timestep is one that balances performance/speed and accuracy. Looking a
 
 <br/><br/>
 
+
+
+## Random System Generator Performance
+
+### For 8 particles, `dt = 0.01` and total simulation time being 1/2 year:
+
+
+The initial total kinetic energy of the system is 0.000150334 \
+The initial total potential energy of the system is -0.000301027 \
+The initial total energy of the system is -0.000150693 
+
+The final total kinetic energy of the system is 0.000150346 \
+The final total potential energy of the system is -0.000301025 \
+The final total energy of the system is -0.00015068
+
+The total simulation time is: 1.19732 ms \
+The average time per timestep is: 0.00380101 ms
+
+### For 64 particles, `dt = 0.01` and total simulation time being 1/2 year:
+
+
+The initial total kinetic energy of the system is 0.00234098 \
+The initial total potential energy of the system is -0.00471449 \
+The initial total energy of the system is -0.00237352
+
+The final total kinetic energy of the system is 0.00214679 \
+The final total potential energy of the system is -0.00433541 \
+The final total energy of the system is -0.00218862
+
+The total simulation time is: 71.4689 ms \
+The average time per timestep is: 0.226885 ms
+
+### For 256 particles, `dt = 0.01` and total simulation time being 1/2 year:
+
+
+The initial total kinetic energy of the system is 0.00895117 \
+The initial total potential energy of the system is -0.0184524 \
+The initial total energy of the system is -0.00950119
+
+The final total kinetic energy of the system is 0.0100518 \
+The final total potential energy of the system is -0.0174344 \
+The final total energy of the system is -0.00738262
+
+The total simulation time is: 1171.37 ms \
+The average time per timestep is: 3.71864 ms
+
+### For 1024 particles, `dt = 0.01` and total simulation time being 1/2 year:
+
+
+The initial total kinetic energy of the system is 0.0393058 \
+The initial total potential energy of the system is -0.0884766 \
+The initial total energy of the system is -0.0491708
+
+The final total kinetic energy of the system is 0.146506 \
+The final total potential energy of the system is -0.0820921 \
+The final total energy of the system is 0.0644139 \
+
+The total simulation time is: 19028.7 ms
+The average time per timestep is: 60.4085 ms
+
+### For 2048 particles, `dt = 0.01` and total simulation time being 1/2 year:
+
+
+The initial total kinetic energy of the system is 0.0747521 \
+The initial total potential energy of the system is -0.18705 \
+The initial total energy of the system is -0.112298
+
+The final total kinetic energy of the system is 7.64706 \
+The final total potential energy of the system is -0.174878 \
+The final total energy of the system is 7.47219
+
+The total simulation time is: 64210.6 ms \
+The average time per timestep is: 203.843 ms
+
+### Note:
+Both the accuracy (because the total energy increases away from 0) and speed get worse as the number of bodies increases.
+
+<br/><br/>
 
 ## Credits
 
