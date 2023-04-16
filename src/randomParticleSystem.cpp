@@ -5,29 +5,11 @@
 
 RandomSystem::RandomSystem(int body_num): num_bodies(body_num) {}
 
-Particle RandomSystem::celestialBody(double mass, double distance, double angle) {
-    if (mass == 1.0 && distance == 0.0) // A central star
-    {
-        Eigen::Vector3d pos_star(distance, distance, distance);
-        Eigen::Vector3d vel_star(0.0, 0.0, 0.0);
-        Eigen::Vector3d acc_star(0.0, 0.0, 0.0);
-
-        return Particle {mass, pos_star, vel_star, acc_star};
-    }
-    else {
-
-        Eigen::Vector3d pos(distance * sin(angle),  distance * cos(angle),  0.0);
-        Eigen::Vector3d vel((-1.0/sqrt(distance)) * cos(angle),  (1.0/sqrt(distance)) * sin(angle), 0.0);
-        Eigen::Vector3d acc(0.0, 0.0, 0.0); // Initial acceleration is 0 or all bodies
-
-        return Particle {mass, pos, vel, acc};
-    }
-}
 
 std::vector<std::shared_ptr<Particle>> RandomSystem::generateInitialConditions() {
     celestial_body_list.clear(); // Ensure list is empty
 
-    auto star = std::make_shared<Particle>(celestialBody(1.0, 0.0));
+    auto star = std::make_shared<Particle>(celestialBody(1.0, 0.0, 0.0));
     celestial_body_list.push_back(star);
 
     std::default_random_engine generator(42); // Seed the random number generator
@@ -38,7 +20,7 @@ std::vector<std::shared_ptr<Particle>> RandomSystem::generateInitialConditions()
     // Create the remaining particles
     for (unsigned int i = 1; i < num_bodies; i++) {
 
-        // Generate random values:
+        // Generate pseudo-random values:
         double mass = massDistribution(generator);
         double distance = distanceDistribution(generator);
         double angle = angleDistribution(generator);

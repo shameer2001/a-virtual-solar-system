@@ -1,35 +1,12 @@
 #include "solarSystem.hpp"
 #include <chrono>
+#include <random>
 #include <iostream>
 
 
 SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system
 SolarSystem::SolarSystem(std::vector<std::shared_ptr<Particle>>& in_body_list): celestial_body_list(in_body_list) {} // Constructor for custom celestial body list (for testing)
 
-
-Particle SolarSystem::celestialBody(double mass, double distance) // Mass is relative to the sun and distance is that between body and sun
-{
-    if (mass == 1.0 && distance == 0.0) // The sun
-    {
-        Eigen::Vector3d pos_sun(distance, distance, distance);
-        Eigen::Vector3d vel_sun(0.0, 0.0, 0.0);
-        Eigen::Vector3d acc_sun(0.0, 0.0, 0.0);
-
-        return Particle {mass, pos_sun, vel_sun, acc_sun};
-    }
-    else {
-        // Seed the random number generator
-        std::srand(std::time(0));
-        double theta = static_cast<double>(std::rand()) / RAND_MAX * (2 * M_PI); // Random theta between 0 and 2pi
-        
-        Eigen::Vector3d pos(distance * sin(theta),  distance * cos(theta),  0.0);
-        Eigen::Vector3d vel((-1.0/sqrt(distance)) * cos(theta),  (1.0/sqrt(distance)) * sin(theta), 0.0);
-        Eigen::Vector3d acc(0.0, 0.0, 0.0); // Initial acceleration is 0 or all bodies
-
-        return Particle {mass, pos, vel, acc};
-    }
-
-} 
 
 
 // Generate Particle list for solar system bodies
@@ -50,10 +27,14 @@ std::vector<std::shared_ptr<Particle>> SolarSystem::generateInitialConditions() 
     };
     celestial_body_list.clear(); // Ensure list is empty
 
+    std::default_random_engine generator(42); // Seed the random number generator
+    std::uniform_real_distribution<double> angleDistribution(0.0, 2.0 * M_PI);
+
     // Loop through vector to create Particle instances for each body and push into list
     for (const auto& [mass, distance] : mass_dist) {
+        double angle = angleDistribution(generator); // Generate pseudo-random angle
 
-        auto body = std::make_shared<Particle>(celestialBody(mass, distance)); // Make celestial body instance as shared pointers
+        auto body = std::make_shared<Particle>(celestialBody(mass, distance, angle)); // Make celestial body instance as shared pointers
         celestial_body_list.push_back(body);
     }
 
@@ -101,6 +82,29 @@ void SolarSystem::printMessages() {
 
 
 
+
+// Generate a celestial body as a separate function
+Particle celestialBody(double mass, double distance, double angle) {
+    if (mass == 1.0 && distance == 0.0) // A central star
+    {
+        Eigen::Vector3d pos_star(distance, distance, distance);
+        Eigen::Vector3d vel_star(0.0, 0.0, 0.0);
+        Eigen::Vector3d acc_star(0.0, 0.0, 0.0);
+
+        return Particle {mass, pos_star, vel_star, acc_star};
+    }
+    else {
+
+        Eigen::Vector3d pos(distance * sin(angle),  distance * cos(angle),  0.0);
+        Eigen::Vector3d vel((-1.0/sqrt(distance)) * cos(angle),  (1.0/sqrt(distance)) * sin(angle), 0.0);
+        Eigen::Vector3d acc(0.0, 0.0, 0.0); // Initial acceleration is 0 or all bodies
+
+        return Particle {mass, pos, vel, acc};
+    }
+}
+
+
+
 // Evolution of any system of bodies as a separate function
 void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time, double epsilon) {
 
@@ -117,7 +121,6 @@ void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_li
         }
     }
 }
-
 
 
 

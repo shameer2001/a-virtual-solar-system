@@ -83,56 +83,56 @@ The final position of Neptune is (-26.8033, -13.6964, 0).
 ### For all timesteps:
 
 The initial total kinetic energy of the system is 0.000112389 \
-The initial total potential energy of the system is -0.00022485 \
-The initial total energy of the system is -0.000112461 
+The initial total potential energy of the system is -0.000224804 \
+The initial total energy of the system is -0.000112415
 
 ### For `dt = 0.0001` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000112537 \
-The final total potential energy of the system is -0.000224276 \
-The final total energy of the system is -0.000111739
+The final total kinetic energy of the system is 0.000111994 \
+The final total potential energy of the system is -0.000223687 \
+The final total energy of the system is -0.000111693
 
 ### For `dt = 0.001` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000110598 \
-The final total potential energy of the system is -0.000220453 \
-The final total energy of the system is -0.000109855
+The final total kinetic energy of the system is 0.000110185 \
+The final total potential energy of the system is -0.000219996 \
+The final total energy of the system is -0.000109811
 
 ### For `dt = 0.01` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.000102691 \
-The final total potential energy of the system is -0.000205216 \
-The final total energy of the system is -0.000102525
+The final total kinetic energy of the system is 0.000102216 \
+The final total potential energy of the system is -0.000204711 \
+The final total energy of the system is -0.000102495
 
 ### For `dt = 0.1` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 7.43482e-05 \
-The final total potential energy of the system is -0.000149266 \
-The final total energy of the system is -7.4918e-05
+The final total kinetic energy of the system is 7.27869e-05 \
+The final total potential energy of the system is -0.000147695 \
+The final total energy of the system is -7.49076e-05
 
 ### For `dt = 1.0` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 4.25877e-05 \
-The final total potential energy of the system is -6.97032e-05 \
-The final total energy of the system is -2.71155e-05
+The final total kinetic energy of the system is 4.0166e-05 \
+The final total potential energy of the system is -6.71251e-05 \
+The final total energy of the system is -2.69591e-05
 
 ### For `dt = 62.8` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.041685 \
-The final total potential energy of the system is -2.15063e-06 \
-The final total energy of the system is 0.0416828
+The final total kinetic energy of the system is 0.0416869 \
+The final total potential energy of the system is -2.17321e-06 \
+The final total energy of the system is 0.0416848
 
 ### For `dt = 100.0` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 0.10555 \
-The final total potential energy of the system is -1.54533e-06 \
-The final total energy of the system is 0.105548
+The final total kinetic energy of the system is 0.105555 \
+The final total potential energy of the system is -1.57413e-06 \
+The final total energy of the system is 0.105553
 
 ### For `dt = 314.0` and total simulation time being 100 years:
 
-The final total kinetic energy of the system is 1.03974 \
-The final total potential energy of the system is -5.37401e-07 \
-The final total energy of the system is 1.03974
+The final total kinetic energy of the system is 1.03978 \
+The final total potential energy of the system is -5.50335e-07 \
+The final total energy of the system is 1.03978
 
 
 <br/><br/>

@@ -4,15 +4,13 @@
 #include "solarSystem.hpp"
 
 
-
+// Initial condition generator for a random system
 class RandomSystem : public InitialConditionGenerator  // Class as subclass for base class InitialConditionGenerator
 {
 
   public:
   RandomSystem(int body_num);
   
-  Particle celestialBody(double mass, double distance, double angle = 0.0); 
-
   std::vector<std::shared_ptr<Particle>> generateInitialConditions() override; 
   std::vector<std::shared_ptr<Particle>> getCelestialBodyList();
 
