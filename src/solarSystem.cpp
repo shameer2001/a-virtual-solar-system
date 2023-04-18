@@ -111,14 +111,20 @@ void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_li
     // Loop for full simulation time
     for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
 
-        // Update acceleration felt by each body
-        for (auto& particle : particle_list) {
-            sumAccelerations(particle_list, *particle, epsilon);
+        #pragma omp parallel  // Create parallel region
+        {
+            // Update acceleration felt by each body
+            #pragma omp for
+            for (auto& particle : particle_list) {
+                sumAccelerations(particle_list, *particle, epsilon);
+            }
+            // Update position and velocity of each body
+            #pragma omp for nowait // Disable unnecessary implicit barrier in this second omp
+            for (auto& particle : particle_list) {
+                particle->update(dt);
+            }
         }
-        // Update position and velocity of each body
-        for (auto& particle : particle_list) {
-            particle->update(dt);
-        }
+
     }
 }
 

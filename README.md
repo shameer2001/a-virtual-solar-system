@@ -273,6 +273,37 @@ Both the accuracy (because the total energy increases away from 0) and speed get
 
 <br/><br/>
 
+
+
+## Parallelising with OpenMP
+
+### Parallelising the `evolutionOfSystem()` function:
+
+For a system of 2048 particles, a timestep of 0.01 and a total simulation time of 1 year. Parallelised the two small for loops in the function.
+
+Before:
+```
+The total simulation time is: 137304 ms
+The average time per timestep is: 218.289 ms
+```
+
+After:
+```
+The total simulation time is: 69346.5 ms
+The average time per timestep is: 110.249 ms
+```
+
+The speed is nearly double. Other places to parallelise were considered such as the for loop in the `generateInitialConditions()` method of the `RandomSystem` class and the for loop in the `sumAccelerations()` function, however these cases increased overhead, did not lead to any improvement in speed and often gave errors when trying to run the app.
+
+
+### The `collapse` vs `schedule` clauses:
+
+The `collapse` clause was not used since there are no nested for loops present in the code for the simulation itself. The `schedule` clause was experimented with and no improvement in the performance was observed. When using `#pragma omp for schedule(dynamic)` in the `evolutionOfSystem()` function, the performance remained the same. When using, `#pragma omp for schedule(static)`, the performance worsened with about 40-50% greater total simulation and average per timestep times. When using, `#pragma omp for schedule(guided)` worsened the performance with about 50-60% greater total simulation and average per timestep times. Therefore, `schedule` was not used when parallelising.
+
+<br/><br/>
+
+
+
 ## Credits
 
 This project is maintained by Dr. Jamie Quinn as part of UCL ARC's course, Research Computing in C++.
