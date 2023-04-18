@@ -2,6 +2,7 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include "particle.hpp"
 #include "solarSystem.hpp"
+#include "randomParticleSystem.hpp"
 using Catch::Matchers::WithinRel;
 
 TEST_CASE( "Particle sets mass correctly", "[particle]" ) {
@@ -405,4 +406,71 @@ TEST_CASE("Check that solar system evolves correctly", "[SolarSystem]") {
 
         REQUIRE( earth_pos_final.isApprox(earth_pos_initial, 1e-2) );
     }
+}
+
+
+
+TEST_CASE("Testing energy functions for SolarSystem class", "[SolarSystem]") {
+    SolarSystem solar_system;
+
+    // Simulate solar system and it's evolution
+    solar_system.generateInitialConditions();
+    double kin_before = totalKineticEnergy(solar_system.getCelestialBodyList());
+    double pot_before = totalPotentialEnergy(solar_system.getCelestialBodyList());
+    double tot_before = totalEnergy(solar_system.getCelestialBodyList());
+
+    evolutionOfSystem(solar_system.getCelestialBodyList(), 0.001, 200 * M_PI); // Run evolution simulation
+    double kin_after = totalKineticEnergy(solar_system.getCelestialBodyList());
+    double pot_after = totalPotentialEnergy(solar_system.getCelestialBodyList());
+    double tot_after = totalEnergy(solar_system.getCelestialBodyList());
+
+
+    // Expected values calculated by hand
+    double kin_before_exp = 0.000113441;
+    double pot_before_exp = -0.000224712;
+    double tot_before_exp = -0.000113489;
+    double kin_after_exp = 0.0001134455;
+    double pot_after_exp =  -0.000222011; 
+    double tot_after_exp = -0.000113557;
+
+    REQUIRE_THAT( kin_before, WithinRel(kin_before_exp, 0.1) );
+    REQUIRE_THAT( pot_before, WithinRel(pot_before_exp, 0.1) );
+    REQUIRE_THAT( tot_before, WithinRel(tot_before_exp, 0.1) );
+    REQUIRE_THAT( kin_after, WithinRel(kin_after_exp, 0.1) );
+    REQUIRE_THAT( pot_after, WithinRel(pot_after_exp, 0.1) );
+    REQUIRE_THAT( tot_after, WithinRel(tot_after_exp, 0.1) );
+
+}
+
+
+
+TEST_CASE("Testing energy functions for RandomSystem class", "[RandomSystem]") {
+    RandomSystem random_system(8);
+
+    // Simulate random system and it's evolution
+    random_system.generateInitialConditions();
+    double kin_before = totalKineticEnergy(random_system.getCelestialBodyList());
+    double pot_before = totalPotentialEnergy(random_system.getCelestialBodyList());
+    double tot_before = totalEnergy(random_system.getCelestialBodyList());
+
+    evolutionOfSystem(random_system.getCelestialBodyList(), 0.01, M_PI); // Run evolution simulation
+    double kin_after = totalKineticEnergy(random_system.getCelestialBodyList());
+    double pot_after = totalPotentialEnergy(random_system.getCelestialBodyList());
+    double tot_after = totalEnergy(random_system.getCelestialBodyList());
+
+    // Expected values calculated by hand
+    double kin_before_exp = 0.000156534;
+    double pot_before_exp = -0.000312047;
+    double tot_before_exp = -0.000154055;
+    double kin_after_exp = 0.000150578;
+    double pot_after_exp =  -0.000311248; 
+    double tot_after_exp = -0.00015781;
+
+    REQUIRE_THAT( kin_before, WithinRel(kin_before_exp, 0.1) );
+    REQUIRE_THAT( pot_before, WithinRel(pot_before_exp, 0.1) );
+    REQUIRE_THAT( tot_before, WithinRel(tot_before_exp, 0.1) );
+    REQUIRE_THAT( kin_after, WithinRel(kin_after_exp, 0.1) );
+    REQUIRE_THAT( pot_after, WithinRel(pot_after_exp, 0.1) );
+    REQUIRE_THAT( tot_after, WithinRel(tot_after_exp, 0.1) );
+
 }
