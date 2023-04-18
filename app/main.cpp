@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   bool solarsystem = false;
   bool randomsystem = false;
   int num_bodies = 0;
-  double soft_fac = 0.0;
+  double soft_fac = 0.0; // The softening factor i.e epsilon
   double dt = 0.0;
   double sim_time = 0.0;
   bool run_time = false; // To measure runtime or not to measure runtime
@@ -287,6 +287,11 @@ int main(int argc, char *argv[])
       std::cout << "The total simulation time is: " << runtime << " ms\n"
                 << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
       << std::endl;
+
+      // Print number of max threads
+      int thread_num_max = omp_get_max_threads();
+      std::cout << "Max threads: " << thread_num_max << "\n" << std::endl;
+
     }
 
 

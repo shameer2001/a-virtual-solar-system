@@ -300,9 +300,33 @@ The speed is nearly double. Other places to parallelise were considered such as 
 
 The `collapse` clause was not used since there are no nested for loops present in the code for the simulation itself. The `schedule` clause was experimented with and no improvement in the performance was observed. When using `#pragma omp for schedule(dynamic)` in the `evolutionOfSystem()` function, the performance remained the same. When using, `#pragma omp for schedule(static)`, the performance worsened with about 40-50% greater total simulation and average per timestep times. When using, `#pragma omp for schedule(guided)` worsened the performance with about 50-60% greater total simulation and average per timestep times. Therefore, `schedule` was not used when parallelising.
 
+<br/>
+
+### Strong Scaling Experiment:
+Used a 2048 particle system, a timestep of 0.01 and a total simulation time of 1 year. My computer has only 2 physical cores. Below is a table of the strong scaling experiment conducted. The speedup is as a factor of the single-thread runtime to 3 decimal places.
+
+| `OMP_NUM_THREADS | Time (ms) |  Speedup  |
+|------------------|-----------|-----------|
+|         1        |  125,519  |   1.000   |
+|         2        |  71,479.6 |   0.569   |
+|         4        |  68,428.4 |   0.545   |
+
+Comment: The Speed is nearly doubled when using 2 threads which is what is expected. However, using 4 threads there is not much improvement rom 2 threads since the machine has only 2 physical cores. Therefore, a maximum of 2 threads gives the best performance.
+
+<br/>
+
+### Weak Scaling Experiment:
+Below is a summary of the weak scaling experiment. The same timestep of 0.01 and simulation time of 1 year was used in each case.
+
+| `OMP_NUM_THREADS | Num Particles | Time (ms) | Speedup |
+|---|---|---|---|
+| 1 | 2048 | 124,810 | 1.000 |
+| 2 | 4096 | 308,618 | 2.473 |
+| 4 | 8192 | 1,136,450 | 9.105 |
+
+Comment: It is clear that using 2 threads and scaling the number of particles to the same proportion decreases the speed. However, the speedup is more than double that when using 1 thread. It can also be seen that the speedup when using 4 cores is 9 times. This is clearly not proportional to the thread number. This is because performance scales with the square of the number of particles. When using 4 threads, the substantial increase in speedup can also be explained by the fact that the cores of the machine are only 2 and exceeding the number of cores with the number of threads will lead to a much worse speed.
+
 <br/><br/>
-
-
 
 ## Credits
 
