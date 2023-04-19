@@ -12,7 +12,7 @@ std::vector<std::shared_ptr<Particle>> RandomSystem::generateInitialConditions()
     auto star = std::make_shared<Particle>(celestialBody(1.0, 0.0, 0.0));
     celestial_body_list.push_back(star);
 
-    std::default_random_engine generator(42); // Seed the random number generator
+    std::default_random_engine generator(42); // Seed the random number generator. Can fix the seed to any value by changing the number.
     std::uniform_real_distribution<double> massDistribution(1.0 / 6000000, 1.0 / 1000);
     std::uniform_real_distribution<double> distanceDistribution(0.4, 30.0);
     std::uniform_real_distribution<double> angleDistribution(0.0, 2.0 * M_PI);

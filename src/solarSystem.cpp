@@ -26,7 +26,7 @@ std::vector<std::shared_ptr<Particle>> SolarSystem::generateInitialConditions() 
     };
     celestial_body_list.clear(); // Ensure list is empty
 
-    std::default_random_engine generator(42); // Seed the random number generator
+    std::default_random_engine generator(42); // Seed the random number generator. Can fix the seed to any value by changing the number.
     std::uniform_real_distribution<double> angleDistribution(0.0, 2.0 * M_PI);
 
     // Loop through vector to create Particle instances for each body and push into list

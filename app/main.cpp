@@ -13,7 +13,7 @@ void help() {
             << "  -ss,  --solar_system       Select to simulate our solar system.\n"
             << "  -rs,  --random_system      Select to simulate a random solar system with random bodies.\n"
             << "  -n,   --number             Set the number of bodies in the random system (must select random system first). Type is integer.\n"
-            << "  -e,   --epsilon            Set the softening factor for the random system (must select random system first). Type is double. Default is 0.0.\n"
+            << "  -e,   --epsilon            Set the softening factor for the random system. Type is double. Default is 0.0.\n"
             << "  -t,   --timestep           Set the timestep of the simulation. Type is double.\n"
             << "  -s,   --simulation_time    Set the total simulation time. Type is double.\n"
             << "  -r,   --runtime            Select if you want measurements of the runtime of the simulation.\n"
@@ -101,11 +101,6 @@ int main(int argc, char *argv[])
       else 
       {
         help();
-        return 1;
-      }
-      if (randomsystem != true) {
-        help();
-        throw std::runtime_error("Did not select to simulate random systems so cannot use -e or --epsilon"); 
         return 1;
       }
     }
@@ -216,7 +211,7 @@ int main(int argc, char *argv[])
       solar_system->printMessages(); 
       printEnergyMessages(solar_system->getCelestialBodyList());
 
-      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time); // Run evolution simulation
+      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
       solar_system->printMessages();
       printEnergyMessages(solar_system->getCelestialBodyList());
     }
@@ -232,7 +227,7 @@ int main(int argc, char *argv[])
       printEnergyMessages(solar_system->getCelestialBodyList());
       #endif
 
-      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time); 
+      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); 
       auto end_time = std::chrono::high_resolution_clock::now();
 
       solar_system->printMessages();

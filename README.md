@@ -45,22 +45,19 @@ The project is split into four main parts aligning with the folder structure des
 You are expected to edit the `CMakeLists.txt` file in each folder to add or remove sources as necessary. For example, if you create a new file `test/particle_test.cpp`, you must add `particle_test.cpp` to the line `add_executable(tests test.cpp)` in `test/CMakeLists.txt`. Please ensure you are comfortable editing these files well before the submission deadline. If you feel you are struggling with the CMake files, please see the Getting Help section of the assignment instructions.
 
 ## Usage Instructions
-
-### Solar System Command Line Interface
-
-Our solar system can be simulated using the solarSystemSimulator app. The guidance of the arguments for this application can be obtained using:
-
+Our solar system and a random solar system can be simulated using the solarSystemSimulator app. The guidance of the arguments for this application can be obtained using:
 ```
 ./build/solarSystemSimulator -h
 ```
 The help argument can also be typed as ```--help```.
 
 
+### Solar System Command Line Interface
 There are two arguments that are needed to run the simulation:
 ```
 ./build/solarSystemSimulator -ss -t <timestep size> -s <simulation time>
 ```
-The solar system argument can also be typed as `--solar_system`. The timestep argument can also be typed as ```--timestep```. The simulation time argument can also be typed as ```--simulation_time```. 
+The `ss` argument can also be typed as `--solar_system`. The timestep argument can also be typed as ```--timestep```. The simulation time argument can also be typed as ```--simulation_time```. You can also adjust the softening factor in the calculations using `-e` or `-epsilon`.
 
 
 To get runtime measurements:
@@ -73,24 +70,16 @@ The runtime argument can also be typed as ```--runtime```.
 
 ### Random System Command Line Interface
 
-A random solar system can be simulated using the solarSystemSimulator app. The guidance of the arguments for this application can be obtained using:
-
-```
-./build/solarSystemSimulator -h
-```
-The help argument can also be typed as ```--help```.
-
-
 There are three arguments that are needed to run the simulation:
 ```
 ./build/solarSystemSimulator -rs -n <number of bodies> -t <timestep size> -s <simulation time>
 ```
-The number argument can also be typed as `--number`. 
+The `-rs` argument can also be typed as `--random_system`. The number argument can also be typed as `--number`. You can also adjust the softening factor in the calculations using `-e` or `-epsilon`.
 
 
 To get runtime measurements:
 ```
-./build/solarSystemSimulator -ss -t <timestep size> -s <simulation time> -r
+./build/solarSystemSimulator -rs -t <timestep size> -s <simulation time> -r
 ```
 
 
