@@ -87,7 +87,7 @@ To get runtime measurements:
 
 Here is an example and its output:
 ```
-./build/solarSystemSimulator -t 0.001 -s 2pi
+./build/solarSystemSimulator -ss -t 0.001 -s 2pi
 ```
 
 ```
