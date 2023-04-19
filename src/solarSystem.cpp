@@ -9,7 +9,6 @@ SolarSystem::SolarSystem(std::vector<std::shared_ptr<Particle>>& in_body_list): 
 
 
 
-// Generate Particle list for solar system bodies
 std::vector<std::shared_ptr<Particle>> SolarSystem::generateInitialConditions() {
 
     // Store mass and distances in a vector:
@@ -43,7 +42,7 @@ std::vector<std::shared_ptr<Particle>> SolarSystem::generateInitialConditions() 
 
 
 
-std::vector<std::shared_ptr<Particle>> SolarSystem::getCelestialBodyList() {
+std::vector<std::shared_ptr<Particle>> SolarSystem::getCelestialBodyList() const {
     return celestial_body_list; 
 }
 
@@ -83,7 +82,6 @@ void SolarSystem::printMessages() {
 
 
 
-// Generate a celestial body as a separate function
 Particle celestialBody(double mass, double distance, double angle) {
     if (mass == 1.0 && distance == 0.0) // A central star
     {
@@ -105,7 +103,6 @@ Particle celestialBody(double mass, double distance, double angle) {
 
 
 
-// Evolution of any system of bodies as a separate function
 void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time, double epsilon) {
 
     // Loop for full simulation time

@@ -33,7 +33,7 @@ std::vector<std::shared_ptr<Particle>> RandomSystem::generateInitialConditions()
 }
 
 
-std::vector<std::shared_ptr<Particle>> RandomSystem::getCelestialBodyList() {
+std::vector<std::shared_ptr<Particle>> RandomSystem::getCelestialBodyList() const{
     return celestial_body_list; 
 }
 

@@ -36,7 +36,6 @@ void Particle::update(double dt) {
 
 
 
-// Acceleration felt by particle j due to particle i
 Eigen::Vector3d calcAcceleration(const Particle& particle_i, const Particle& particle_j, double epsilon) {
     
     Eigen::Vector3d r = particle_i.getPosition() - particle_j.getPosition(); // Distance between particles i & j
@@ -53,7 +52,6 @@ Eigen::Vector3d calcAcceleration(const Particle& particle_i, const Particle& par
 
 
 
-// Define == for 2 Particle class instances
 bool operator==(const Particle& p1, const Particle& p2) {
 
     // If the mass, position, velocity and acceleration are all equal between the 2:
@@ -70,7 +68,6 @@ bool operator==(const Particle& p1, const Particle& p2) {
     } 
 }
 
-// Add accelerations felt by a particle (particle_main)
 void sumAccelerations(const std::vector<std::shared_ptr<Particle>>& particles,  Particle& particle_main, double epsilon) {
     Eigen::Vector3d acc_tot(0, 0, 0); 
 

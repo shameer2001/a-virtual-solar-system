@@ -103,25 +103,26 @@ Here is an example and its output:
 
 ```
 The initial position of Sun is (0, 0, 0).
-The initial position of Mercury is (-0.362857, -0.168329, 0).
-The initial position of Venus is (-0.635, -0.294576, 0).
-The initial position of Earth is (-0.907143, -0.420823, 0).
-The initial position of Mars is (-1.36071, -0.631235, 0).
-The initial position of Jupiter is (-4.71714, -2.18828, 0).
-The initial position of Saturn is (-8.61786, -3.99782, 0).
-The initial position of Uranus is (-17.4171, -8.07981, 0).
-The initial position of Neptune is (-27.305, -12.6668, 0).
+The initial position of Mercury is (0.398603, -0.0334015, 0).
+The initial position of Venus is (0.660511, 0.231788, 0).
+The initial position of Earth is (-0.0773197, -0.997006, 0).
+The initial position of Mars is (1.49851, -0.0669091, 0).
+The initial position of Jupiter is (-4.76597, 2.07978, 0).
+The initial position of Saturn is (2.82026, -9.07172, 0).
+The initial position of Uranus is (19.1975, 0.312663, 0).
+The initial position of Neptune is (26.9617, -13.3819, 0).
 
-The final position of Sun is (-0.000609735, -0.000468373, 0).
-The final position of Mercury is (0.422259, 0.1975, 0).
-The final position of Venus is (0.0746785, 0.72202, 0).
-The final position of Earth is (-0.941993, -0.373222, 0).
-The final position of Mars is (1.14375, 0.977918, 0).
-The final position of Jupiter is (-2.9643, -4.27277, 0).
-The final position of Saturn is (-7.56787, -5.74108, 0).
-The final position of Uranus is (-16.7655, -9.35697, 0).
-The final position of Neptune is (-26.8033, -13.6964, 0).
+The final position of Sun is (-0.000630235, 0.000124112, 0).
+The final position of Mercury is (-0.466058, 0.0375412, 0).
+The final position of Venus is (-0.145615, -0.711716, 0).
+The final position of Earth is (-0.13688, -1.00319, 0).
+The final position of Mars is (-1.46727, -0.340779, 0).
+The final position of Jupiter is (-5.16362, -0.614664, 0).
+The final position of Saturn is (4.68749, -8.26294, 0).
+The final position of Uranus is (19.1206, 1.74438, 0).
+The final position of Neptune is (27.4513, -12.3465, 0).
 ```
+Note: Yes, you can use `pi` in the argument to represent the constant.
 <br/><br/>
 
 
@@ -354,6 +355,8 @@ The `collapse` clause was not used since there are no nested for loops present i
 <br/>
 
 ### Strong Scaling Experiment:
+Note: Both scaling experiments use the second level optimisation flag `-O2`. 
+
 Used a 2048 particle system, a timestep of 0.01 and a total simulation time of 1 year. My computer has only 2 physical cores. Below is a table of the strong scaling experiment conducted. The speedup is as a factor of the single-thread runtime to 3 decimal places.
 
 | `OMP_NUM_THREADS | Time (ms) |  Speedup  |

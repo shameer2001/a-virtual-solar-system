@@ -12,7 +12,7 @@ class RandomSystem : public InitialConditionGenerator  // Class as subclass for 
   RandomSystem(int body_num);
   
   std::vector<std::shared_ptr<Particle>> generateInitialConditions() override; 
-  std::vector<std::shared_ptr<Particle>> getCelestialBodyList();
+  std::vector<std::shared_ptr<Particle>> getCelestialBodyList() const;
 
 
   private:
