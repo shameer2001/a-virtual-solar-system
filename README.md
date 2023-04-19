@@ -46,12 +46,59 @@ You are expected to edit the `CMakeLists.txt` file in each folder to add or remo
 
 ## Usage Instructions
 
-### Command Line Interface
+### Solar System Command Line Interface
 
-Here is an example and its output:
+Our solar system can be simulated using the solarSystemSimulator app. The guidance of the arguments for this application can be obtained using:
 
 ```
-./build/solarSystemSimulator -t 0.001 -s 6.28
+./build/solarSystemSimulator -h
+```
+The help argument can also be typed as ```--help```.
+
+
+There are two arguments that are needed to run the simulation:
+```
+./build/solarSystemSimulator -ss -t <timestep size> -s <simulation time>
+```
+The solar system argument can also be typed as `--solar_system`. The timestep argument can also be typed as ```--timestep```. The simulation time argument can also be typed as ```--simulation_time```. 
+
+
+To get runtime measurements:
+```
+./build/solarSystemSimulator -ss -t <timestep size> -s <simulation time> -r
+```
+The runtime argument can also be typed as ```--runtime```. 
+
+
+
+### Random System Command Line Interface
+
+A random solar system can be simulated using the solarSystemSimulator app. The guidance of the arguments for this application can be obtained using:
+
+```
+./build/solarSystemSimulator -h
+```
+The help argument can also be typed as ```--help```.
+
+
+There are three arguments that are needed to run the simulation:
+```
+./build/solarSystemSimulator -rs -n <number of bodies> -t <timestep size> -s <simulation time>
+```
+The number argument can also be typed as `--number`. 
+
+
+To get runtime measurements:
+```
+./build/solarSystemSimulator -ss -t <timestep size> -s <simulation time> -r
+```
+
+
+### Example
+
+Here is an example and its output:
+```
+./build/solarSystemSimulator -t 0.001 -s 2pi
 ```
 
 ```
@@ -134,6 +181,8 @@ The final total kinetic energy of the system is 1.03978 \
 The final total potential energy of the system is -5.50335e-07 \
 The final total energy of the system is 1.03978
 
+### Comment:
+The energy increases as the timestep size increases. In other words, the simulation gets less accurate as the larger timestep size.
 
 <br/><br/>
 
@@ -174,6 +223,8 @@ The average time per timestep is: 0.00872043 ms
 The total simulation time is: 0.043621 ms \
 The average time per timestep is: 0.0145403 ms
 
+#### Comment:
+The total time decreases as the timestep size increases. The average time per timestep remains relatively constant.
 
 <br/>
 
@@ -268,7 +319,7 @@ The final total energy of the system is 7.47219
 The total simulation time is: 64210.6 ms \
 The average time per timestep is: 203.843 ms
 
-### Note:
+### Comment:
 Both the accuracy (because the total energy increases away from 0) and speed get worse as the number of bodies increases.
 
 <br/><br/>
