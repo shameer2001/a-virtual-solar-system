@@ -15,7 +15,6 @@ void help() {
             << "  -e,   --epsilon            Set the softening factor for the random system. Type is double. Default is 0.0.\n"
             << "  -t,   --timestep           Set the timestep of the simulation. Type is double.\n"
             << "  -s,   --simulation_time    Set the total simulation time. Type is double.\n"
-            << "  -r,   --runtime            Select if you want measurements of the runtime of the simulation.\n"
             << "  -h,   --help               Show this help message.\n"
             << " \n"
             << "Note 1 : The units for the time arguments are in radians where 2π represents one full earth cycle (i.e. one year).\n"
@@ -36,7 +35,6 @@ int main(int argc, char *argv[])
   double soft_fac = 0.0; // The softening factor i.e epsilon
   double dt = 0.0;
   double sim_time = 0.0;
-  bool run_time = false; // To measure runtime or not to measure runtime
 
   if (argc == 1) // When there are no arguments given
   {
@@ -70,6 +68,10 @@ int main(int argc, char *argv[])
         return 1;
       }    
     }
+
+
+
+
 
     else if (arg == "-n" || arg == "--number" && (i+1)<argc) {
       if (i + 1 < argc) // If there is a value after this argument
@@ -181,18 +183,6 @@ int main(int argc, char *argv[])
 
 
 
-    else if (arg == "-r" || arg == "--runtime") {
-      if (i < argc) 
-      {
-        run_time = true;
-      }
-      else 
-      {
-        help();
-        return 1;
-      }    
-    }
-
 
     else if (arg == "-h" || arg == "--help")
     {
@@ -221,57 +211,42 @@ int main(int argc, char *argv[])
     // i.e. you can use solar_system as a pointer to SolarSystem and use the other methods exclusive to the SolarSystem class
 
 
-    if (run_time == false) {
-      // Simulate solar system and it's evolution
-      systems[0]->generateInitialConditions();
-      solar_system->printMessages(); 
-      printEnergyMessages(solar_system->getCelestialBodyList());
+ 
+    systems[0]->generateInitialConditions();
+    solar_system->printMessages(); 
+    printEnergyMessages(solar_system->getCelestialBodyList());
 
 
-
-      try {
-        evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
-      }
-      catch(std::exception &e) {
-        std::cout << e.what() << std::endl; // If dt, sim_time or soft_fac are not doubles
-      }      
-      solar_system->printMessages();
-      printEnergyMessages(solar_system->getCelestialBodyList());
+    auto start_time = std::chrono::high_resolution_clock::now();
+    systems[0]->generateInitialConditions(); // Run this again to measure total simulation time
+    try {
+      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
     }
-
-
-    // If you want to measure runtime
-    else {
-      auto start_time = std::chrono::high_resolution_clock::now();
-      systems[0]->generateInitialConditions();
-
-      #ifdef DEBUG // Disable
-      solar_system->printMessages(); 
-      printEnergyMessages(solar_system->getCelestialBodyList());
-      #endif
-
-      try {
-        evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
-      }
-      catch(std::exception &e) {
-        std::cout << e.what() << std::endl; 
-      }       
-      auto end_time = std::chrono::high_resolution_clock::now();
-      solar_system->printMessages();
-      printEnergyMessages(solar_system->getCelestialBodyList());
+    catch(std::exception &e) {
+      std::cout << e.what() << std::endl; // If dt are sim_time are negative
+    }       
+    auto end_time = std::chrono::high_resolution_clock::now();
 
 
 
+    solar_system->printMessages();
+    printEnergyMessages(solar_system->getCelestialBodyList());
 
-      int num_timesteps = std::ceil( sim_time / dt ); // Number of timesteps needed in simulation (round up to nearest int)
 
-      double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
-      std::cout << "The total simulation time is: " << runtime << " ms\n"
-                << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
-      << std::endl;
-    }
+
+    int num_timesteps = std::ceil( sim_time / dt ); // Number of timesteps needed in simulation (round up to nearest int)
+
+    double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+    std::cout << "The total simulation time is: " << runtime << " ms\n"
+              << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
+    << std::endl;
+    
 
   }
+
+
+
+
 
 
 
@@ -286,59 +261,44 @@ int main(int argc, char *argv[])
     }
     catch(std::exception &e)
     {
-      std::cout << e.what() << std::endl; // If num_bodies is not int type
+      std::cout << e.what() << std::endl; // If num_bodies is negative
     }
     RandomSystem* random_system = dynamic_cast<RandomSystem*>(systems[1]); // Cast the already defined InitialConditionGenerator Pointer to a RandomSystem pointer
 
 
 
-    if (run_time == false) {
-      // Simulate random system and it's evolution:
-      systems[1]->generateInitialConditions();
-      printEnergyMessages(random_system->getCelestialBodyList());
+
+
+    // Simulate random system and it's evolution:
+    systems[1]->generateInitialConditions();
+    printEnergyMessages(random_system->getCelestialBodyList()); 
 
 
 
-      try {
-        evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
-      }
-      catch(std::exception &e) {
-        std::cout << e.what() << std::endl; 
-      } 
-      printEnergyMessages(random_system->getCelestialBodyList());
+    auto start_time = std::chrono::high_resolution_clock::now();
+    systems[1]->generateInitialConditions();
+    try {
+      evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
     }
-    else {
-      auto start_time = std::chrono::high_resolution_clock::now();
-      systems[1]->generateInitialConditions();
+    catch(std::exception &e) {
+      std::cout << e.what() << std::endl; 
+    }       
+    auto end_time = std::chrono::high_resolution_clock::now();
+    
+    
+    
+    printEnergyMessages(random_system->getCelestialBodyList());  
+    int num_timesteps = std::ceil( sim_time / dt ); 
 
-      #ifdef DEBUG
-      printEnergyMessages(random_system->getCelestialBodyList()); 
-      #endif
+    double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+    std::cout << "The total simulation time is: " << runtime << " ms\n"
+              << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
+    << std::endl;
 
-      try {
-        evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
-      }
-      catch(std::exception &e) {
-        std::cout << e.what() << std::endl; 
-      }       
-      auto end_time = std::chrono::high_resolution_clock::now();
-      printEnergyMessages(random_system->getCelestialBodyList());  
-
-
-
-
-      int num_timesteps = std::ceil( sim_time / dt ); 
-
-      double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
-      std::cout << "The total simulation time is: " << runtime << " ms\n"
-                << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
-      << std::endl;
-
-      // Print number of max threads
-      int thread_num_max = omp_get_max_threads();
-      std::cout << "Max threads: " << thread_num_max << "\n" << std::endl;
-    }
-
+    // Print number of max threads
+    int thread_num_max = omp_get_max_threads();
+    std::cout << "Max threads: " << thread_num_max << "\n" << std::endl;
+    
 
   }
 
