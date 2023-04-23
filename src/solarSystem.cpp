@@ -139,9 +139,9 @@ void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_li
 
 double totalKineticEnergy(const std::vector<std::shared_ptr<Particle>>& particle_list) {
     double tot_KE_sum = 0.0;
-
-    #pragma omp parallel for reduction(+: tot_KE_sum)
+    
     // Loop through all particles
+    #pragma omp parallel for reduction(+: tot_KE_sum)
     for(int i = 0; i < particle_list.size(); i++) {
         tot_KE_sum += particle_list[i]->getMass() * (particle_list[i]->getVelocity()).squaredNorm(); // KE equation
     }
