@@ -102,11 +102,12 @@ Particle celestialBody(double mass, double distance, double angle) {
 
 void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time, double epsilon) {
 
-    if ( (typeid(dt) != typeid(double)) && (typeid(total_time) != typeid(double)) && (typeid(epsilon) != typeid(double)) )
+    // Check that timestep and total simulation time arguments are greater than 0
+    if ( (dt <= 0.0) || (total_time <= 0.0) )
     {
-        throw std::invalid_argument("The timestep, total time and softening factor arguments must be integer or double type.");
+        throw std::invalid_argument("The timestep and total time must be greater than 0.");
     }
-    
+
 
     // Loop for full simulation time
     for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {
@@ -140,6 +141,7 @@ double totalKineticEnergy(const std::vector<std::shared_ptr<Particle>>& particle
     double tot_KE_sum = 0.0;
 
     #pragma omp parallel for reduction(+: tot_KE_sum)
+    // Loop through all particles
     for(int i = 0; i < particle_list.size(); i++) {
         tot_KE_sum += particle_list[i]->getMass() * (particle_list[i]->getVelocity()).squaredNorm(); // KE equation
     }

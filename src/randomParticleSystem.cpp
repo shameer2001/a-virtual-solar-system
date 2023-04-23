@@ -3,8 +3,8 @@
 
 
 RandomSystem::RandomSystem(int body_num): num_bodies(body_num) {
-    if (typeid(body_num) != typeid(int)) {
-        throw std::invalid_argument("Number of bodies must be an integer.");
+    if (body_num <= 0) {
+        throw std::invalid_argument("Number of bodies must be greater than 0.");
     }
 }
 

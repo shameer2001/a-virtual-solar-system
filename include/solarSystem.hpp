@@ -5,7 +5,6 @@
 #include <chrono>
 #include <random>
 #include <iostream>
-#include <typeinfo>
 
 
 // Initial condition generator abstract class

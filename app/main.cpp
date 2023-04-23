@@ -1,7 +1,8 @@
 #include "particle.hpp"
 #include "solarSystem.hpp"
 #include "randomParticleSystem.hpp"
-
+#include <cctype>
+#include <string>
 
 
 void help() {
@@ -47,7 +48,7 @@ int main(int argc, char *argv[])
   {
     std::string arg = argv[i];
 
-    if (arg == "-ss" || arg == "--solar_system" && (i+1)<argc) {
+    if (arg == "-ss" || arg == "--solar_system") {
       if (i + 1 < argc) // If there are arguments after this one
       {
         solarsystem = true;
@@ -58,7 +59,7 @@ int main(int argc, char *argv[])
         return 1;
       }
     }
-    else if (arg == "-rs" || arg == "--random_system" && (i+1)<argc) {
+    else if (arg == "-rs" || arg == "--random_system") {
       if (i + 1 < argc) 
       {
         randomsystem = true;
@@ -73,7 +74,14 @@ int main(int argc, char *argv[])
     else if (arg == "-n" || arg == "--number" && (i+1)<argc) {
       if (i + 1 < argc) // If there is a value after this argument
       {
-        num_bodies = std::stoi(argv[i + 1]); 
+        std::string num_arg = argv[i + 1];
+        for (auto c : num_arg) { // Loop through each char in the string
+          if (!std::isdigit(c)) { // Check that there is no non-integer character
+            throw std::invalid_argument("Number argument must be an integer");
+          }
+        }
+
+        num_bodies = std::stoi(num_arg); 
         i++;
       }
       else 
@@ -92,7 +100,14 @@ int main(int argc, char *argv[])
     {
       if (i + 1 < argc)
       {
-        soft_fac = strtod(argv[i + 1], NULL); // Convert char to double using strtod()
+        const char* input = argv[i + 1];
+        char* endptr;
+        soft_fac = strtod(input, &endptr); // Convert char to double using strtod()
+
+        if (*endptr != '\0') { // If non-numerical character in argument
+          help();
+          throw std::invalid_argument("Invalid character encountered in softening factor argument.");
+        }
         i++;
       }
       else 
@@ -106,7 +121,14 @@ int main(int argc, char *argv[])
     {
       if (i + 1 < argc)
       {
-        dt = strtod(argv[i + 1], NULL); 
+        const char* input = argv[i + 1];
+        char* endptr;
+        dt = strtod(input, &endptr); // Convert timestep to double
+
+        if (*endptr != '\0') { // If non-numerical character in argument
+          help();
+          throw std::invalid_argument("Invalid character encountered in timestep argument.");
+        }
         i++;
       }
       else 
@@ -115,7 +137,6 @@ int main(int argc, char *argv[])
         return 1;
       }
     }
-
 
     else if (arg == "-s" || arg == "--simulation_time" && (i+1)<argc)
     {
@@ -126,10 +147,14 @@ int main(int argc, char *argv[])
 
         // If no "pi" found in argument
         if (pi_pos == std::string::npos) { 
-
           const char* input = argv[i + 1];
           char* endptr;
           sim_time = strtod(input, &endptr); // Simulation time as input if input is a double
+
+          if (*endptr != '\0') { // If non-numerical character in argument
+            help();
+            throw std::invalid_argument("Invalid character encountered in simulation time argument. The only non-numerical characters allowed are 'pi'");
+          }
         }  
 
         else {
