@@ -141,14 +141,18 @@ int main(int argc, char *argv[])
 
           if (*endptr != '\0') { // If non-numerical character in argument
             help();
-            throw std::invalid_argument("Invalid character encountered in simulation time argument. The only non-numerical characters allowed are 'pi'");
+            throw std::invalid_argument("The only non-numerical characters allowed are 'pi'.");
           }
         }  
 
         else {
           std::string x_str = sim_time_str.substr(0, pi_pos); // String between position 0 and pi_pos (ie any "coefficient" of pi)
 
-          if (x_str == "") { // If no coefficient
+          if (sim_time_str.length() - 2 !=  pi_pos) { // If characters/numbers after pi
+            help();
+            throw std::invalid_argument("The only non-numerical characters allowed are 'pi' and it must be at the end.");
+          }
+          else if (x_str == "") { // If no coefficient
             sim_time = M_PI;
           }
           else {
@@ -192,6 +196,12 @@ int main(int argc, char *argv[])
     throw std::invalid_argument("Both systems cannot be simulated at the same time."); 
     return 1;
   }
+
+
+
+
+
+
 
 
 
