@@ -278,9 +278,9 @@ The initial total energy of the system is -0.0491708
 
 The final total kinetic energy of the system is 0.146506 \
 The final total potential energy of the system is -0.0820921 \
-The final total energy of the system is 0.0644139 \
+The final total energy of the system is 0.0644139 
 
-The total simulation time is: 19028.7 ms
+The total simulation time is: 19028.7 ms \
 The average time per timestep is: 60.4085 ms
 
 ### For 2048 particles, `dt = 0.01` and total simulation time being 1/2 year:
