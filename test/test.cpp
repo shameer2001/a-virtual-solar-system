@@ -474,3 +474,34 @@ TEST_CASE("Testing energy functions for RandomSystem class", "[RandomSystem]") {
     REQUIRE_THAT( tot_after, WithinRel(tot_after_exp, 0.1) );
 
 }
+
+
+
+TEST_CASE("Check evolutionOfSystem() function input time-step and total-time throws", "[SolarRandomSystem]") {
+    // Test SolarSystem class
+    SolarSystem solar_system;
+    solar_system.generateInitialConditions();
+
+    REQUIRE_NOTHROW(evolutionOfSystem(solar_system.getCelestialBodyList(), 0.01, M_PI, 0.1));
+    REQUIRE_THROWS(evolutionOfSystem(solar_system.getCelestialBodyList(), -0.01, M_PI, 0.1)); // Negative dt
+    REQUIRE_THROWS(evolutionOfSystem(solar_system.getCelestialBodyList(), 0.01, -3.14, 0.1)); // Negative sim time
+    REQUIRE_THROWS(evolutionOfSystem(solar_system.getCelestialBodyList(), -0.01, -3.14, 0.1)); // Both negative
+
+    // Test RandomSystem class
+    RandomSystem random_system(8);
+    random_system.generateInitialConditions();
+
+    REQUIRE_NOTHROW(evolutionOfSystem(random_system.getCelestialBodyList(), 0.01, M_PI, 0.1));
+    REQUIRE_THROWS(evolutionOfSystem(random_system.getCelestialBodyList(), -0.01, M_PI, 0.1)); // Negative dt
+    REQUIRE_THROWS(evolutionOfSystem(random_system.getCelestialBodyList(), 0.01, -3.14, 0.1)); // Negative sim time
+    REQUIRE_THROWS(evolutionOfSystem(random_system.getCelestialBodyList(), -0.01, -3.14, 0.1)); // Both negative
+
+}
+
+
+
+
+TEST_CASE("Check RandomSystem class constructor throws error after negative number of bodies", "[RandomSystem]") {
+    REQUIRE_NOTHROW(RandomSystem(10));
+    REQUIRE_THROWS(RandomSystem(-5));
+}
