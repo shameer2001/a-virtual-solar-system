@@ -57,14 +57,7 @@ There are two arguments that are needed to run the simulation:
 ```
 ./build/solarSystemSimulator -ss -t <timestep size> -s <simulation time>
 ```
-The `ss` argument can also be typed as `--solar_system`. The timestep argument can also be typed as ```--timestep```. The simulation time argument can also be typed as ```--simulation_time```. You can also adjust the softening factor in the calculations using `-e` or `-epsilon`.
-
-
-To get runtime measurements:
-```
-./build/solarSystemSimulator -ss -t <timestep size> -s <simulation time> -r
-```
-The runtime argument can also be typed as ```--runtime```. 
+The `ss` argument can also be typed as `--solar_system`. The timestep argument can also be typed as ```--timestep```. The total simulation time argument can also be typed as ```--simulation_time```. You can also adjust the softening factor in the calculations using `-e` or `-epsilon`.
 
 
 
@@ -74,13 +67,8 @@ There are three arguments that are needed to run the simulation:
 ```
 ./build/solarSystemSimulator -rs -n <number of bodies> -t <timestep size> -s <simulation time>
 ```
-The `-rs` argument can also be typed as `--random_system`. The number argument can also be typed as `--number`. You can also adjust the softening factor in the calculations using `-e` or `-epsilon`.
+The `-rs` argument can also be typed as `--random_system`. The number argument can also be typed as `--number`. You can also adjust the softening factor in the calculations using `-e` or `-epsilon`. The timestep and total simulation time arguments are the same as the solar system app.
 
-
-To get runtime measurements:
-```
-./build/solarSystemSimulator -rs -t <timestep size> -s <simulation time> -r
-```
 
 
 ### Example
