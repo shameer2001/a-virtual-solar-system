@@ -1,8 +1,6 @@
 #include "particle.hpp"
 #include "solarSystem.hpp"
 #include "randomParticleSystem.hpp"
-#include <cctype>
-#include <string>
 
 
 void help() {
@@ -47,38 +45,22 @@ int main(int argc, char *argv[])
     std::string arg = argv[i];
 
     if (arg == "-ss" || arg == "--solar_system") {
-      if (i + 1 < argc) // If there are arguments after this one
-      {
-        solarsystem = true;
-      }
-      else 
-      {
-        help();
-        return 1;
-      }
+      solarsystem = true;
     }
     else if (arg == "-rs" || arg == "--random_system") {
-      if (i + 1 < argc) 
-      {
-        randomsystem = true;
-      }
-      else 
-      {
-        help();
-        return 1;
-      }    
+      randomsystem = true;
     }
 
 
 
 
-
-    else if (arg == "-n" || arg == "--number" && (i+1)<argc) {
+    else if (arg == "-n" || arg == "--number") {
       if (i + 1 < argc) // If there is a value after this argument
       {
         std::string num_arg = argv[i + 1];
         for (auto c : num_arg) { // Loop through each char in the string
-          if (!std::isdigit(c)) { // Check that there is no non-integer character
+          if (c != '-' && !std::isdigit(c)) { // Check that there is no positive non-integer character
+            help();
             throw std::invalid_argument("Number argument must be an integer");
           }
         }
@@ -89,16 +71,18 @@ int main(int argc, char *argv[])
       else 
       {
         help();
+        throw std::invalid_argument("No value given for number argument.");
         return 1;
       }
       // Ensure random system is selected for this input to be used:
       if (randomsystem != true) {
         help();
+        throw std::invalid_argument("Random system must be selected first to use number argument.");
         return 1;
       }
     }
 
-    else if (arg == "-e" || arg == "--epsilon" && (i+1)<argc)
+    else if (arg == "-e" || arg == "--epsilon")
     {
       if (i + 1 < argc)
       {
@@ -115,11 +99,12 @@ int main(int argc, char *argv[])
       else 
       {
         help();
+        throw std::invalid_argument("No value given for epsilon argument.");
         return 1;
       }
     }
 
-    else if (arg == "-t" || arg == "--timestep" && (i+1)<argc)
+    else if (arg == "-t" || arg == "--timestep")
     {
       if (i + 1 < argc)
       {
@@ -136,11 +121,12 @@ int main(int argc, char *argv[])
       else 
       {
         help();
+        throw std::invalid_argument("No value given for timestep argument.");
         return 1;
       }
     }
 
-    else if (arg == "-s" || arg == "--simulation_time" && (i+1)<argc)
+    else if (arg == "-s" || arg == "--simulation_time")
     {
       if (i + 1 < argc) 
       {
@@ -177,6 +163,7 @@ int main(int argc, char *argv[])
       else 
       {
         help();
+        throw std::invalid_argument("No value given for simulation time argument.");
         return 1;
       }
     }
@@ -192,6 +179,19 @@ int main(int argc, char *argv[])
 
   }
 
+
+  // If neither system is selected
+  if (solarsystem == false && randomsystem == false) {
+    help();
+    throw std::invalid_argument("Did not select any system."); 
+    return 1;
+  }
+  // If both systems are selected
+  else if (solarsystem == true && randomsystem == true) {
+    help();
+    throw std::invalid_argument("Both systems cannot be simulated at the same time."); 
+    return 1;
+  }
 
 
 
@@ -210,36 +210,34 @@ int main(int argc, char *argv[])
     SolarSystem* solar_system = dynamic_cast<SolarSystem*>(systems[0]); // Cast the already defined InitialConditionGenerator Pointer to a SolarSystem pointer. 
     // i.e. you can use solar_system as a pointer to SolarSystem and use the other methods exclusive to the SolarSystem class
 
-
- 
-    systems[0]->generateInitialConditions();
-    solar_system->printMessages(); 
-    printEnergyMessages(solar_system->getCelestialBodyList());
-
-
-    auto start_time = std::chrono::high_resolution_clock::now();
-    systems[0]->generateInitialConditions(); // Run this again to measure total simulation time
     try {
-      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+      systems[0]->generateInitialConditions();
+      solar_system->printMessages(); 
+      printEnergyMessages(solar_system->getCelestialBodyList());
+
+
+      auto start_time = std::chrono::high_resolution_clock::now();
+      systems[0]->generateInitialConditions(); // Run this again to measure total simulation time
+      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run simulation evolution 
+      auto end_time = std::chrono::high_resolution_clock::now();
+
+
+      solar_system->printMessages();
+      printEnergyMessages(solar_system->getCelestialBodyList());
+
+
+      int num_timesteps = std::ceil( sim_time / dt ); // Number of timesteps needed in simulation (round up to nearest int)
+      double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+      std::cout << "The total simulation time is: " << runtime << " ms\n"
+                << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
+      << std::endl;
     }
-    catch(std::exception &e) {
-      std::cout << e.what() << std::endl; // If dt are sim_time are negative
+
+    catch(const std::exception &e) {
+      help();
+      std::cerr << "ERROR: " << e.what() << std::endl; // If dt and/or sim_time are negative
     }       
-    auto end_time = std::chrono::high_resolution_clock::now();
 
-
-
-    solar_system->printMessages();
-    printEnergyMessages(solar_system->getCelestialBodyList());
-
-
-
-    int num_timesteps = std::ceil( sim_time / dt ); // Number of timesteps needed in simulation (round up to nearest int)
-
-    double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
-    std::cout << "The total simulation time is: " << runtime << " ms\n"
-              << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
-    << std::endl;
     
 
   }
@@ -258,47 +256,39 @@ int main(int argc, char *argv[])
     try 
     {
       systems[1] = new RandomSystem(num_bodies); // Create object of RandomSystem class
+      RandomSystem* random_system = dynamic_cast<RandomSystem*>(systems[1]); // Cast the already defined InitialConditionGenerator Pointer to a RandomSystem pointer
+
+      // Simulate random system and it's evolution:
+      systems[1]->generateInitialConditions();
+      printEnergyMessages(random_system->getCelestialBodyList()); 
+
+
+      auto start_time = std::chrono::high_resolution_clock::now();
+      systems[1]->generateInitialConditions();
+      evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run simulation evolution    
+      auto end_time = std::chrono::high_resolution_clock::now();
+      
+      
+      printEnergyMessages(random_system->getCelestialBodyList());  
+      int num_timesteps = std::ceil( sim_time / dt ); 
+
+      double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
+      std::cout << "The total simulation time is: " << runtime << " ms\n"
+                << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
+      << std::endl;
+
+      // Print number of max threads
+      int thread_num_max = omp_get_max_threads();
+      std::cout << "Max threads: " << thread_num_max << "\n" << std::endl;
+
+
     }
-    catch(std::exception &e)
+
+    catch(const std::exception &e)
     {
-      std::cout << e.what() << std::endl; // If num_bodies is negative
+      help();
+      std::cerr << "ERROR: " << e.what() << std::endl; // If num_bodies and/or dt and/or total_time is negative 
     }
-    RandomSystem* random_system = dynamic_cast<RandomSystem*>(systems[1]); // Cast the already defined InitialConditionGenerator Pointer to a RandomSystem pointer
-
-
-
-
-
-    // Simulate random system and it's evolution:
-    systems[1]->generateInitialConditions();
-    printEnergyMessages(random_system->getCelestialBodyList()); 
-
-
-
-    auto start_time = std::chrono::high_resolution_clock::now();
-    systems[1]->generateInitialConditions();
-    try {
-      evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
-    }
-    catch(std::exception &e) {
-      std::cout << e.what() << std::endl; 
-    }       
-    auto end_time = std::chrono::high_resolution_clock::now();
-    
-    
-    
-    printEnergyMessages(random_system->getCelestialBodyList());  
-    int num_timesteps = std::ceil( sim_time / dt ); 
-
-    double runtime = std::chrono::duration<double, std::milli>(end_time - start_time).count();
-    std::cout << "The total simulation time is: " << runtime << " ms\n"
-              << "The average time per timestep is: " << runtime/num_timesteps << " ms\n"         
-    << std::endl;
-
-    // Print number of max threads
-    int thread_num_max = omp_get_max_threads();
-    std::cout << "Max threads: " << thread_num_max << "\n" << std::endl;
-    
 
   }
 
@@ -308,20 +298,7 @@ int main(int argc, char *argv[])
 
 
 
-  // If neither system is selected
-  else if (solarsystem == false && randomsystem == false) {
-    std::cout << "Did not select any system.\n" 
-              << " ";
-    help();
-    return 1;
-  }
-  // If both systems are selected
-  else if (solarsystem == true && randomsystem == true) {
-    std::cout << "Both systems cannot be simulated at the same time.\n" 
-              << " ";
-    help();
-    return 1;
-  }
+
 
 
     
