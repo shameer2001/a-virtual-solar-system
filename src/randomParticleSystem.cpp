@@ -1,9 +1,12 @@
 #include "randomParticleSystem.hpp"
-#include <chrono>
-#include <random>
 
 
-RandomSystem::RandomSystem(int body_num): num_bodies(body_num) {}
+
+RandomSystem::RandomSystem(int body_num): num_bodies(body_num) {
+    if (typeid(body_num) != typeid(int)) {
+        throw std::invalid_argument("Number of bodies must be an integer.");
+    }
+}
 
 
 std::vector<std::shared_ptr<Particle>> RandomSystem::generateInitialConditions() {

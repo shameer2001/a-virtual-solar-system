@@ -1,8 +1,6 @@
-#include <iostream>
 #include "particle.hpp"
 #include "solarSystem.hpp"
 #include "randomParticleSystem.hpp"
-#include <chrono>
 
 
 
@@ -42,7 +40,6 @@ int main(int argc, char *argv[])
   if (argc == 1) // When there are no arguments given
   {
     help();
-    throw std::runtime_error("No inputs given"); 
     return 1;
   }
 
@@ -84,9 +81,9 @@ int main(int argc, char *argv[])
         help();
         return 1;
       }
+      // Ensure random system is selected for this input to be used:
       if (randomsystem != true) {
         help();
-        throw std::runtime_error("Did not select to simulate random system so cannot use -n or --number"); 
         return 1;
       }
     }
@@ -133,11 +130,6 @@ int main(int argc, char *argv[])
           const char* input = argv[i + 1];
           char* endptr;
           sim_time = strtod(input, &endptr); // Simulation time as input if input is a double
-
-          if (*endptr != '\0') { // If non-numerical character in argument
-            help();
-            throw std::runtime_error("Invalid character encountered in simulation time argument. The only non-numerical characters allowed are 'pi'");
-          }
         }  
 
         else {
@@ -151,7 +143,6 @@ int main(int argc, char *argv[])
             sim_time = x * M_PI;
           }
         }
-
         i++;
       }
 
@@ -211,7 +202,14 @@ int main(int argc, char *argv[])
       solar_system->printMessages(); 
       printEnergyMessages(solar_system->getCelestialBodyList());
 
-      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+
+
+      try {
+        evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+      }
+      catch(std::exception &e) {
+        std::cout << e.what() << std::endl; // If dt, sim_time or soft_fac are not doubles
+      }      
       solar_system->printMessages();
       printEnergyMessages(solar_system->getCelestialBodyList());
     }
@@ -227,11 +225,18 @@ int main(int argc, char *argv[])
       printEnergyMessages(solar_system->getCelestialBodyList());
       #endif
 
-      evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); 
+      try {
+        evolutionOfSystem(solar_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+      }
+      catch(std::exception &e) {
+        std::cout << e.what() << std::endl; 
+      }       
       auto end_time = std::chrono::high_resolution_clock::now();
-
       solar_system->printMessages();
       printEnergyMessages(solar_system->getCelestialBodyList());
+
+
+
 
       int num_timesteps = std::ceil( sim_time / dt ); // Number of timesteps needed in simulation (round up to nearest int)
 
@@ -250,19 +255,33 @@ int main(int argc, char *argv[])
 
 
   else if (randomsystem == true) {
-    systems[1] = new RandomSystem(num_bodies); // Create object of RandomSystem class
+    try 
+    {
+      systems[1] = new RandomSystem(num_bodies); // Create object of RandomSystem class
+    }
+    catch(std::exception &e)
+    {
+      std::cout << e.what() << std::endl; // If num_bodies is not int type
+    }
     RandomSystem* random_system = dynamic_cast<RandomSystem*>(systems[1]); // Cast the already defined InitialConditionGenerator Pointer to a RandomSystem pointer
+
+
 
     if (run_time == false) {
       // Simulate random system and it's evolution:
       systems[1]->generateInitialConditions();
       printEnergyMessages(random_system->getCelestialBodyList());
 
-      evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+
+
+      try {
+        evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+      }
+      catch(std::exception &e) {
+        std::cout << e.what() << std::endl; 
+      } 
       printEnergyMessages(random_system->getCelestialBodyList());
     }
-
-
     else {
       auto start_time = std::chrono::high_resolution_clock::now();
       systems[1]->generateInitialConditions();
@@ -271,10 +290,17 @@ int main(int argc, char *argv[])
       printEnergyMessages(random_system->getCelestialBodyList()); 
       #endif
 
-      evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); 
+      try {
+        evolutionOfSystem(random_system->getCelestialBodyList(), dt, sim_time, soft_fac); // Run evolution simulation
+      }
+      catch(std::exception &e) {
+        std::cout << e.what() << std::endl; 
+      }       
       auto end_time = std::chrono::high_resolution_clock::now();
-
       printEnergyMessages(random_system->getCelestialBodyList());  
+
+
+
 
       int num_timesteps = std::ceil( sim_time / dt ); 
 
@@ -286,7 +312,6 @@ int main(int argc, char *argv[])
       // Print number of max threads
       int thread_num_max = omp_get_max_threads();
       std::cout << "Max threads: " << thread_num_max << "\n" << std::endl;
-
     }
 
 

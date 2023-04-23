@@ -1,7 +1,4 @@
 #include "solarSystem.hpp"
-#include <chrono>
-#include <random>
-#include <iostream>
 
 
 SolarSystem::SolarSystem() {} // Constructor for celestial body list as the solar system
@@ -104,6 +101,12 @@ Particle celestialBody(double mass, double distance, double angle) {
 
 
 void evolutionOfSystem(const std::vector<std::shared_ptr<Particle>>& particle_list, double dt, double total_time, double epsilon) {
+
+    if ( (typeid(dt) != typeid(double)) && (typeid(total_time) != typeid(double)) && (typeid(epsilon) != typeid(double)) )
+    {
+        throw std::invalid_argument("The timestep, total time and softening factor arguments must be integer or double type.");
+    }
+    
 
     // Loop for full simulation time
     for (double sim_time = 0.0; sim_time < total_time; sim_time += dt) {

@@ -2,6 +2,10 @@
 #define solarSystem_hpp
 
 #include "particle.hpp"
+#include <chrono>
+#include <random>
+#include <iostream>
+#include <typeinfo>
 
 
 // Initial condition generator abstract class
